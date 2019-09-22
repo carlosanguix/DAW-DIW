@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--
+
 <style>
-    #containerTop{
-        background-color: aqua;
+    header {
+        background-color: #F2B705;
     }
-    #logo{
+
+    #logo {
         float: left;
     }
-    #login{
+
+    #login {
         float: right;
         margin: 60px 0px 0px 0px;
     }
-    #navigation{ ¡¡Se convertirá en hamburgerMenu!!
+
+    #navigation {
         text-align: center;
     }
 </style>
--->
 
 <!--
     Background colors
@@ -29,26 +31,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>El varón de la birra</title>
-    
-    <div id="containerTop">
-        <div id="logo">
-            <a href="index.html">
-                <img src="logo.jpg" width="200px">
-            </a>
-        </div>
-
-        <div id="login">
-            <img src="lupa.png" height="40px">
-            <img src="logo_inicio_sesion.png" height="50px">
-        </div>
-    </div>
-    <hr>
-
 </head>
 
 <body>
-    
+
+    <header style="background-color: #F2B705">
+        <div id="containerTop">
+            <div id="logo">
+                <a href="index.html">
+                    <img src="logo.jpg" width="200px">
+                </a>
+            </div>
+
+            <div id="login">
+                <img src="lupa.png"><input type="text">
+                <img src="user.png"><span>Iniciar sesión</span>
+                <img src="carrito.png">
+            </div>
+        </div>
+    </header>
+
+    <br><br><br><br><br><br><br><br><br><br><br>
+
     <div id="navigation">
+        <hr>
         <nav>
             <a href="cervezaConcreta.html">Cervezas</a>
             <a href="https://www.w3schools.com/tags/tag_nav.asp">Snacks</a>
@@ -59,17 +65,16 @@
     <hr>
 
     <div id="descripcion">
-        <img src="http://revistanuevasenergias.com/wp-content/uploads/2018/07/cerveza.jpg" width="100%">
+        <img src="descripcion1.jpg" width="100%">
     </div>
     <hr>
 
     <div id="lasMasBuscadas">
         <h2>Las más buscadas</h2>
         <img src="https://viandas.shop/201-large_default/cerveza-coolumbus.jpg" height="200px">
-        <img src="https://viandas.shop/201-large_default/cerveza-coolumbus.jpg" height="200px">
-        <img src="https://viandas.shop/201-large_default/cerveza-coolumbus.jpg" height="200px">
-        <img src="https://viandas.shop/201-large_default/cerveza-coolumbus.jpg" height="200px">
-        <img src="https://viandas.shop/201-large_default/cerveza-coolumbus.jpg" height="200px">
+        <img src="https://decervecitas.com/262-thickbox_default/tripel-karmeliet-33-cl.jpg" height="200px">
+        <img src="https://souriredessaveurs.com/2946/cerveza-leffe-lager-belga-66-25-cl.jpg" height="200px">
+        <img src="http://www.cervezainternacional.net/images/productos/chimay-azul-33cl_51_1_1.jpg" height="200px">
     </div>
     <hr>
 
@@ -88,8 +93,26 @@
                 praesentium.</p>
         </article>
     </div>
-    <hr>
 
 </body>
+<hr>
+
+<footer id="footer">
+    <div>
+        <ul>
+            <li><b>Varón de la birra</b></li>
+            <li>Quiénes somos</li>
+            <li>Contacto</li>
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <li><b>Síguenos</b></li>
+            <li><img src="facebook.png"></li>
+            <li><img src="googleplus.png"></li>
+            <li><img src="twitter.png"></li>
+        </ul>
+    </div>
+</footer>
 
 </html>
