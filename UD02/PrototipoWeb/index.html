@@ -4,33 +4,27 @@
 
 <style>
 
-    @import url("css/smartphone.css");
+    @import url("estilos/smartphone.css");
 
-    @media (min-width: 1080px) {
-        @import url("css/pc.css");
-    }
-
+    @import url("estilos/pc.css") (min-width: 1081px);
+    
 </style>
-
-<!--
-    Background colors
-    Posicionamiento <div>
--->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>El varón de la birra</title>
+    <link rel="icon" href="imagenes/logo.png">
 </head>
 
 <body>
 
-    <header style="background-color: #F2B705">
+    <header>
         <div id="containerTop">
             <div id="logo">
-                <a href="index.html">
-                    <img src="imagenes/logo.jpg" width="200px">
+                <a href="dindex.html">
+                    <img src="imagenes/logo.png" width="200px">
                 </a>
             </div>
 
@@ -42,25 +36,20 @@
         </div>
     </header>
 
-    <br><br><br><br><br><br><br><br><br><br><br>
-
     <div id="navigation">
-        <hr>
         <nav>
             <ul>
-                <li><a href="cervezaConcreta.html">Cervezas</a></li>
-                <li><a href="https://www.w3schools.com/tags/tag_nav.asp">Snacks</a></li>
-                <li><a href="https://www.w3schools.com/tags/tag_nav.asp">Cervecerías</a></li>
-                <li><a href="https://www.w3schools.com/tags/tag_nav.asp">Libros sobre cerveza</a></li>
+                <li class="listaNav"><img src="imagenes/beer.png" alt=""><a href="cervezaConcreta.html">Cervezas</a></li>
+                <li class="listaNav"><img src="imagenes/patatasFritas.png" alt=""><a href="https://www.w3schools.com/tags/tag_nav.asp">Snacks</a></li>
+                <li class="listaNav"><img src="imagenes/placeholder.png" alt=""><a href="https://www.w3schools.com/tags/tag_nav.asp">Cervecerías</a></li>
+                <li class="listaNav"><img src="imagenes/book.png" alt=""><a href="https://www.w3schools.com/tags/tag_nav.asp">Libros sobre cerveza</a></li>
             </ul>
         </nav>
     </div>
-    <hr>
 
     <div id="descripcion">
         <img src="imagenes/descripcion1.jpg" width="100%">
     </div>
-    <hr>
 
     <div id="lasMasBuscadas">
         <h2>Las más buscadas</h2>

@@ -1,16 +1,62 @@
+/* Color Theme Swatches in Hex */
+.Copa-de-cerveza-1-hex { color: #F2B705; }
+.Copa-de-cerveza-2-hex { color: #D9D8D7; }
+.Copa-de-cerveza-3-hex { color: #F29F05; }
+.Copa-de-cerveza-4-hex { color: #F28705; }
+.Copa-de-cerveza-5-hex { color: #D96704; }
+
+/* Color Theme Swatches in RGBA */
+.Copa-de-cerveza-1-rgba { color: rgba(242, 182, 4, 1); }
+.Copa-de-cerveza-2-rgba { color: rgba(216, 216, 214, 1); }
+.Copa-de-cerveza-3-rgba { color: rgba(242, 159, 4, 1); }
+.Copa-de-cerveza-4-rgba { color: rgba(242, 135, 4, 1); }
+.Copa-de-cerveza-5-rgba { color: rgba(216, 103, 4, 1); }
+
+/* Color Theme Swatches in HSLA */
+.Copa-de-cerveza-1-hsla { color: hsla(45, 96, 48, 1); }
+.Copa-de-cerveza-2-hsla { color: hsla(45, 2, 84, 1); }
+.Copa-de-cerveza-3-hsla { color: hsla(39, 96, 48, 1); }
+.Copa-de-cerveza-4-hsla { color: hsla(33, 96, 48, 1); }
+.Copa-de-cerveza-5-hsla { color: hsla(28, 96, 43, 1); }
+
+/*Etiquetas generales*/
+
+a{
+    font-size:40px;
+    color: cadetblue;
+    text-decoration: none;
+}
+
+a:hover{
+    background-color: aqua;
+}
+
+/*Clases*/
+
+.listaNav {
+    list-style: none;
+    font-size: 30px;
+    line-height: 4ex;
+    border: 2px red;
+}
+
+/*ID*/
+
 header {
-    background-color: #F2B705;
+    background-color: #D96704;
 }
 
 #logo {
-    float: left;
+    text-align: center;
 }
 
 #login {
-    float: right;
-    margin: 60px 0px 0px 0px;
+    text-align: right
 }
 
-#navigation {
+#navigation nav ul{
     text-align: center;
+    background-color: #F2B705;
+    margin: 0%;
+    padding: 0%;
 }
