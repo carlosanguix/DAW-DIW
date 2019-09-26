@@ -27,8 +27,8 @@ a{
     text-decoration: none;
 }
 
-a:hover{
-    background-color: aqua;
+header {
+    background-color: #D96704;
 }
 
 /*Clases*/
@@ -36,22 +36,28 @@ a:hover{
 .listaNav {
     list-style: none;
     font-size: 30px;
-    line-height: 4ex;
-    border: 2px red;
+    line-height: 50px;
+}
+
+.listaNav:hover{
+    background-color: aqua;
 }
 
 /*ID*/
 
-header {
-    background-color: #D96704;
+#containerTop {
+    width: 100%;
+    min-height: 230px;
 }
 
 #logo {
-    text-align: center;
+   float: left;
 }
 
 #login {
-    text-align: right
+    display: flex;
+    float: right;
+    margin: 45px 2% 0 0;
 }
 
 #navigation nav ul{
