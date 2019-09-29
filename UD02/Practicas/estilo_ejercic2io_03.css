@@ -1,0 +1,28 @@
+body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+li:nth-child(odd):hover::marker {
+    content: "Satán !";
+}
+
+li:nth-child(even):hover:after {
+    content: "Alabado sea el Monstruo Espagetti Volador";
+}
+
+li:nth-child(3) {
+    color: greenyellow;
+}
+
+h2:nth-child(2) {
+    color: red;
+}
+
+h2::first-letter {
+    color: tomato;
+}
+
