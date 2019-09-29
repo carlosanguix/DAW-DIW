@@ -5,22 +5,31 @@
 
 #logo {
     width: 15%;
-    float: left;
     display: inline-block;
     white-space: nowrap;
 }
 
 #login {
     float: right;
-    margin: 45px 2% 0 0;
 }
 
 #navigation {
+    background-color: #F2B705;
 }
 
 .listaNav{
     display: inline;
     margin-right: 20px;
+    margin: 0%;
+    padding: 0%;
+}
+
+.listaNav img {
+    width: 30px;
+}
+
+.listaNav a {
+    font-size: 42px;
 }
 
 

@@ -1,6 +1,6 @@
 /* Color Theme Swatches in Hex */
-.Copa-de-cerveza-1-hex { color: #F2B705; }
 .Copa-de-cerveza-2-hex { color: #D9D8D7; }
+.Copa-de-cerveza-1-hex { color: #F2B705; }
 .Copa-de-cerveza-3-hex { color: #F29F05; }
 .Copa-de-cerveza-4-hex { color: #F28705; }
 .Copa-de-cerveza-5-hex { color: #D96704; }
@@ -23,7 +23,7 @@
 
 a{
     font-size:40px;
-    color: cadetblue;
+    color: #D9D8D7;
     text-decoration: none;
 }
 
@@ -35,8 +35,14 @@ header {
 
 .listaNav {
     list-style: none;
-    font-size: 30px;
-    line-height: 50px;
+}
+
+.listaNav a{
+    font-size: 100px;
+}
+
+.listaNav img {
+    width: 60px;
 }
 
 .listaNav:hover{
@@ -47,22 +53,31 @@ header {
 
 #containerTop {
     width: 100%;
-    min-height: 230px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-flow: wrap;
+    flex-direction: row;
 }
 
-#logo {
-   float: left;
+#lasMasBuscadas {
+    background-color: #F29F05;
+    padding: 0%;
+    margin: 0%;
 }
 
 #login {
     display: flex;
-    float: right;
-    margin: 45px 2% 0 0;
+    align-items: center;
+    margin: 70px 12px 0 0;
+}
+
+#navigation {
+    background-color: #F28705;
 }
 
 #navigation nav ul{
     text-align: center;
-    background-color: #F2B705;
     margin: 0%;
     padding: 0%;
 }
