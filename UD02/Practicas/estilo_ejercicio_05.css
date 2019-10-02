@@ -1,0 +1,20 @@
+body {
+    font-family: 'Amatic SC';
+    font-size: 110%;
+}
+
+header {
+    background-color: lightgrey;
+    padding: 10px 10px 40px 10px;
+}
+
+.logo {
+    font-size: 150%;
+}
+
+li,
+a {
+    text-decoration: none;
+    list-style: none;
+    margin-bottom: 20px;
+}
