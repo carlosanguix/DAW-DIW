@@ -40,7 +40,7 @@ a {
 }
 
 #dificultad:checked:after {
-    background-image: url(cthulhu.svg);
+    background-image: url(imagenes/cthulhu.svg);
     content: "";
     display: inline-block;
     background-size: 50px 50px;
