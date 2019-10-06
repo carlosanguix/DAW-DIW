@@ -1,20 +1,77 @@
 body {
     font-family: 'Amatic SC';
-    font-size: 110%;
+    font-size: 160%;
 }
 
 header {
-    background-color: lightgrey;
-    padding: 10px 10px 40px 10px;
+    background-color: rgb(240, 240, 240);
+    padding: 10px 10px 0px 0px;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+}
+
+a,
+li {
+    color: rgb(98, 199, 98);
+    margin-top: 20px;
+    text-decoration: none;
+    list-style: none;
+}
+
+article {
+    padding-left: 5%;
+    width: 70%;
 }
 
 .logo {
-    font-size: 150%;
+    color: black;
 }
 
-li,
-a {
-    text-decoration: none;
-    list-style: none;
-    margin-bottom: 20px;
-}                                     
+.modulo {
+    display: inline-block;
+    width: 30%;
+}
+
+.modulo:nth-child(even) {
+    background-color: rgb(240, 240, 240);
+}
+
+li:first-child>a::after {
+    background-image: url("imagenes/cthulhu.svg");
+    display: inline-block;
+    background-repeat: no-repeat;
+    content: "";
+    margin-left: 300px;
+    background-size: 50px 50px;
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 700px) {
+    header {
+        padding-bottom: 40px;
+    }
+    .logo {
+        font-size: 200%;
+    }
+}
+
+@media (min-width: 701px) {
+    header {
+        overflow: hidden;
+    }
+    nav {
+        float: right;
+    }
+    li {
+        display: inline-block;
+        margin-left: 10px;
+    }
+    li:first-child>a:after {
+        display: flexbox;
+        margin-left: -50px;
+    }
+}
