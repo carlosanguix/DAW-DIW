@@ -24,6 +24,9 @@ html {
   Apparently this is a bit better than applying box-sizing: border-box; directly to the * selector
 */
 
+
+/*(*)Todos los elementos*/
+
 *,
 *:before,
 *:after {
@@ -38,7 +41,6 @@ body {
     /* background: white; */
     background-attachment: fixed;
     letter-spacing: -1px;
-    text-align: center;
 }
 
 h1,
@@ -48,6 +50,7 @@ h4,
 h5,
 h6 {
     margin: 0 0 5px 0;
+    text-align: center;
 }
 
 
@@ -71,15 +74,39 @@ h6 {
 
 .container {
     display: grid;
+    /*Total de partes: 1/6 + 2/6 + 1/6 + 2/6 = 6/6*/
     grid-template-columns: 1fr 2fr 1fr 2fr;
-    grid-gap: 10px 10px;
+    /*Espaciado entre filas(20px) y columnas(20px)*/
+    grid-gap: 20px 20px;
     margin-top: 20px;
 }
 
 .item2 {
+    /*Las columnas que ocupa(combinarCeldas)*/
     grid-column: span 3;
 }
 
 .item:nth-child(odd) {
     background-color: var(--grey);
+}
+
+.item:nth-child(odd):hover {
+    /* X | Y | blur | esparcimiento */
+    box-shadow: 10px 10px;
+}
+
+.item:nth-child(odd):hover+.item:nth-child(even) {
+    box-shadow: 10px 10px;
+}
+
+#SealOfApproval {
+    background-image: url("../UD02/Practicas/imagenes/cthulhu_approval.gif");
+    /*Tamaños de la imagen, no aparece si no tiene estas propiedades*/
+    width: 200px;
+    height: 200px;
+    /*Se queda fijada en la pantalla del usuario aunque haya un scrollbar*/
+    position: fixed;
+    /*Posición de la imagen en la pantalla*/
+    bottom: -100px;
+    right: -100px;
 }
