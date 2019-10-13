@@ -1,0 +1,63 @@
+.pagina {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "header header header header" "nav main main main" "footer footer footer footer";
+    grid-column-gap: 20px;
+}
+
+header {
+    grid-area: header;
+    font-size: 20px;
+    grid-column-start: 2;
+    margin-bottom: 20px;
+}
+
+nav {
+    grid-area: nav;
+    font-size: 20px;
+}
+
+main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr 1fr 1fr;
+    justify-content: start;
+    grid-row-gap: 20px;
+}
+
+footer {
+    grid-area: footer;
+    font-size: 20px;
+    justify-self: center;
+    align-self: center;
+}
+
+:target {
+    border: 5px solid green;
+    /*border-bottom: 5px solid green;*/
+    /*border-left: 5px solid green;*/
+}
+
+ul {
+    margin-top: 0px;
+}
+
+li {
+    list-style: none;
+    margin-bottom: 10px;
+    box-shadow: 4px 6px 9px 5px rgb(44, 44, 44);
+}
+
+a {
+    text-decoration: none;
+}
+
+main>div>img {
+    min-width: 100%;
+    min-height: 100%;
+    max-height: 33%;
+    border: 1px solid white;
+    box-shadow: 0px 0px 8px 0px rgb(255, 223, 117);
+}
