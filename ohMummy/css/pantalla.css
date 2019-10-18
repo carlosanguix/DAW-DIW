@@ -1,0 +1,85 @@
+.pantalla {
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-rows: 2;
+    justify-content: center;
+    align-items: center;
+    grid-template-areas: "score vidas" "mapa mapa";
+}
+
+.score {
+    grid-area: score;
+}
+
+.vidas {
+    grid-area: vidas;
+}
+
+.mapa {
+    grid-area: mapa;
+    display: grid;
+    grid-template-columns: repeat(21, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+}
+
+.camino {
+    background-color: black;
+}
+
+.personajeTop {
+    background-color: black;
+    content: url("../img/pj.gif");
+    transform: rotate(-90deg);
+    height: 100%;
+    width: 100%;
+}
+
+.personajeRight {
+    background-color: black;
+    content: url("../img/pj.gif");
+    height: 100%;
+    width: 100%;
+}
+
+.personajeBottom {
+    background-color: black;
+    content: url("../img/pj.gif");
+    transform: rotate(90deg);
+    height: 100%;
+    width: 100%;
+}
+
+.personajeLeft {
+    background-color: black;
+    content: url("../img/pj.gif");
+    transform: rotate(180deg);
+    height: 100%;
+    width: 100%;
+}
+
+.momia {
+    background-color: black;
+    content: url('../img/mummy.gif');
+    height: 100%;
+    width: 100%;
+}
+
+.muro {
+    background-color: orange;
+}
+
+.muroRevelado {
+    background-color: brown;
+}
+
+.caminoPisado {
+    background-color: black;
+    content: url("../img/ball.png");
+    height: 100%;
+    width: 100%;
+}
+
+.mapa div {
+    height: 40px;
+    width: 40px;
+}
