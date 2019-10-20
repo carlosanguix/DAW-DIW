@@ -30,7 +30,7 @@ var div = divMap.children;
 // Llamamos a la función que nos crea el mapa
 crearMapa(mapa);
 // Movemos las momias con un intervalo de 3s para siempre
-setInterval(moverMomias, 2000);
+setInterval(moverMomias, 300);
 // Barajamos el Array para aleatorizar lo que habrá dentro de los pilares
 aleatorizarContenidoMuros();
 
@@ -139,37 +139,7 @@ window.addEventListener("keydown", function(key) {
 
 
 
-function moverMomias() {
-    for (let i = 0; i < momias.length; i++) {
-        /*Comprobamos el valor absoluto de la distancia entre la momia[i] y el Pj*/
-        let momiaY = momias[i][0];
-        let momiaX = momias[i][1];
-        let distanciaY = momiaY - posPj[0];
-        let distanciaX = momiaX - posPj[1];
-        /* MAL 
-        console.log("Y: " + Math.abs(distanciaY) + ", X: " + Math.abs(distanciaX));
-        if (Math.abs(distanciaY) > Math.abs(distanciaX) && (mapa[momiaY - 1][momiaX] != 1 || mapa[momiaY + 1][momiaX] != 1)) {
-            console.log("Y");
-            if (distanciaY < 0) {
-                momias[i][0]++;
-            } else if (distanciaY > 0) {
-                momias[i][0]--;
-            }
-        } else if (Math.abs(distanciaX) > Math.abs(distanciaY) && (mapa[momiaY][momiaX - 1] != 1 || mapa[momiaY][momiaX + 1] != 1)) {
-            console.log("X");
-            if (distanciaX < 0) {
-                momias[i][1]++;
-            } else if (distanciaX > 0) {
-                momias[i][1]--;
-            }
-        }
-        */
 
-        //console.table(mapa);
-        console.log("Momia: " + momias[i]);
-
-    }
-}
 
 // Función con la que cada vez que damos un paso eliminamos las clases que afectan al personaje en el paso dado anteriormente
 function eliminarDivPj() {
@@ -235,6 +205,74 @@ function moverJugador(cursor) {
     // console.log(mapa[0].length)
 }
 
+function moverMomias() {
+    let pjY = posPj[0];
+    let pjX = posPj[1];
+    for (let i = 0; i < momias.length; i++) {
+        /*Comprobamos el valor absoluto de la distancia entre la momia[i] y el Pj*/
+        let momiaY = momias[i][0];
+        let momiaX = momias[i][1];
+
+        div.item(momiaY * 21 + momiaX).classList.remove('momia');
+        let distanciaY = momiaY - pjY;
+        let distanciaX = momiaX - pjX;
+        console.log("distancia Y: " + distanciaY + ",distanciaX: " + distanciaX);
+        if (Math.abs(distanciaY) > Math.abs(distanciaX)) { // La momia esta mas lejos en el eje Y que en X
+            if (distanciaY < 0 && mapa[momiaY + 1][momiaX] != 1) { // La momia está arriba del pj && no hay pilar debajo de ella
+                momiaY++;
+            } else if (distanciaY > 0 && mapa[momiaY - 1][momiaX] != 1) {
+                momiaY--;
+            } else {
+                if (momiaX > pjX) {
+                    momiaX--;
+                } else {
+                    momiaY++;
+                }
+            }
+        } else if (Math.abs(distanciaY) < Math.abs(distanciaX)) { // Lo contrario
+            if (distanciaX < 0 && mapa[momiaY][momiaX + 1] != 1) { // La momia está arriba del pj && no hay pilar debajo de ella
+                momiaX++;
+            } else if (distanciaY > 0 && mapa[momiaY][momiaX - 1] != 1) {
+                momiaX--;
+            } else {
+                if (momiaY > pjY) {
+                    momiaY--;
+                } else {
+                    momiaY++;
+                }
+            }
+        } else { // La momia está a la misma distancia del eje X que del eje Y
+            if (distanciaX == 0 && distanciaY == 0) { // Está en el mismo espacio que el pj
+
+            } else { // Está a la misma distancia de Y, X pero no está en el mismo espacio
+                let rnd = Math.floor(Math.random() * 2);
+                if (mapa[momiaY - 1][momiaX] != 1) {
+                    momiaY--;
+                } else if (mapa[momiaY + 1][momiaX] != 1) {
+                    momiaY++;
+                } else if (mapa[momiaY][momiaX - 1] != 1) {
+                    momiaX--;
+                } else {
+                    momiaX++;
+                }
+            }
+        }
+
+        // Borramos la imagen de la momia del paso anterior
+
+        console.log(momiaY + ", " + momiaX);
+        momias[i][0] = momiaY;
+        momias[i][1] = momiaX;
+        // Dibujamos la momia en su siguiente paso
+        div.item(momiaY * 21 + momiaX).classList.add('momia');
+
+
+        console.table(mapa);
+        console.log("Momia: " + momias[i]);
+
+    }
+}
+
 /*  0 - Camino sin pisar
     1 - Muro
     2 - Posición personaje
@@ -273,6 +311,7 @@ function crearMapa(mapa) {
                     // Nos quedamos con las posiciones de la momia y la añadimos al array de momias
                     posMomia.push(fila + 1, columna);
                     momias.push(posMomia);
+                    divInterior.classList.add('camino');
                     divInterior.classList.add('momia');
                 } else {
                     mapa[fila + 1][columna] = 0;
