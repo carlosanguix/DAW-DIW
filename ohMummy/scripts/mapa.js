@@ -245,16 +245,7 @@ function moverMomias() {
             if (distanciaX == 0 && distanciaY == 0) { // Está en el mismo espacio que el pj
 
             } else { // Está a la misma distancia de Y, X pero no está en el mismo espacio
-                let rnd = Math.floor(Math.random() * 2);
-                if (mapa[momiaY - 1][momiaX] != 1) {
-                    momiaY--;
-                } else if (mapa[momiaY + 1][momiaX] != 1) {
-                    momiaY++;
-                } else if (mapa[momiaY][momiaX - 1] != 1) {
-                    momiaX--;
-                } else {
-                    momiaX++;
-                }
+
             }
         }
 
