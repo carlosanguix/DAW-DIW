@@ -72,6 +72,22 @@
     background-color: brown;
 }
 
+.muroCentralLlave {
+    content: url('../img/key.png');
+}
+
+.muroCentralMomia {
+    content: url('../img/mummy.gif');
+}
+
+.muroCentralCofre {
+    content: url('../img/cherry.png');
+}
+
+.muroCentralPergamino {
+    content: url('../img/pergamino.gif');
+}
+
 .caminoPisado {
     background-color: black;
     content: url("../img/ball.png");
