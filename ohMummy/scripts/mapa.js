@@ -25,15 +25,23 @@ var contenidoMuros = [1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 0, 0, 0, 0, 0
 // Coleccionables para superar el nivel
 var llaveEncontrada = false;
 var urnaEncontrada = false;
+// Pergamino para matar una momia
+var pergaminoActivo = false;
+// Vidas del PJ
+var vidas = 5;
+// Nivel en el que te encuentras
+var level = 1;
 // Elemento div class=mapa
 var divMap = document.getElementsByClassName("mapa")[0];
 var div = divMap.children;
+// Elemento div class=divVidas
+var divVidas = document.getElementsByClassName('divVidas')[0];
 
 /* -----------------------FUNCIONES INICIALES--------------------------- */
 // Llamamos a la función que nos crea el mapa
 crearMapa(mapa);
 // Movemos las momias con un intervalo de 3s para siempre
-setInterval(moverMomias, 700);
+setInterval(moverMomias, 600);
 // Barajamos el Array para aleatorizar lo que habrá dentro de los pilares
 // aleatorizarContenidoMuros();
 console.log(contenidoMuros);
@@ -45,6 +53,13 @@ console.log(contenidoMuros);
     4 - Camino pisado
     5 - Muro revelado*/
 function crearMapa(mapa) {
+
+    let divVidas = document.getElementsByClassName('divVidas')[0];
+    for (let i = 0; i < vidas; i++) {
+        let unaVida = document.createElement('div');
+        unaVida.classList.add('vida');
+        divVidas.appendChild(unaVida);
+    }
 
     let momiaEnMapa = false;
     // Creamos la fila superior
@@ -128,7 +143,8 @@ function moverMomias() {
                     momiaY--;
                 } else if (distanciaX < 0 && mapa[momiaY][momiaX + 1] != 1 && xMas1) {
                     momiaX++;
-                } else if (distanciaX > mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
+                } else if (distanciaX > 0 && mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
+                    console.log('asd');
                     momiaX--;
                 } else if (distanciaX == distanciaY) {
                     let rnd = Math.floor(Math.random() * 2)
@@ -137,6 +153,7 @@ function moverMomias() {
                     } else if (mapa[momiaY + 1][momiaX] != 1 && yMas1) {
                         momiaY++;
                     } else if (mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
+                        console.log('asd');
                         momiaX--;
                     } else if (mapa[momiaY][momiaX + 1] != 1 && xMas1) {
                         momiaX++;
@@ -145,14 +162,58 @@ function moverMomias() {
             }
         }
         //console.log(momiaY + ", " + momiaX);
-
         momias[i] = momiaY;
         momias[i + 1] = momiaX;
-        // Dibujamos la momia en su siguiente paso
-        div.item(momiaY * 21 + momiaX).classList.add('momia');
+        // La posición de la momia coincide con la del pj, eliminamos la momia
+        let divConPj = contienePersonaje(momiaY, momiaX);
+        if (divConPj) {
+            div.item(momiaY * 21 + momiaX).classList.add('momia');
+            eliminarMomiaChocada();
+            eliminarMomiaEnPj();
+        } else {
+            // Dibujamos la momia en su siguiente paso
+            div.item(momiaY * 21 + momiaX).classList.add('momia');
+        }
 
         // console.table(mapa);
         //console.log("Momia: " + momias[i]);
+    }
+}
+
+// Funcion con la que eliminamos la momia con la que nos hemos chocado y le quitamos una vida al personaje dependiendo de si tiene el pergamino o no.
+function eliminarMomiaChocada() {
+    let momiaEnPj = div.item(posPj[0] * 21 + posPj[1]).classList.contains('momia');
+    if (momiaEnPj) {
+        if (!pergaminoActivo) {
+            if (vidas != 0) {
+                let vida = document.querySelector('.vida');
+                vida.parentNode.removeChild(vida);
+            }
+            vidas--;
+        } else {
+            pergaminoActivo = false;
+        }
+        div.item(posPj[0] * 21 + posPj[1]).classList.remove('momia');
+    }
+    eliminarMomiaEnPj();
+}
+
+function eliminarMomiaEnPj() {
+    for (let i = 0; i < momias.length; i += 2) {
+        if (momias[i] == posPj[0] && momias[i + 1] == posPj[1]) {
+            momias.splice(i, 2);
+        }
+    }
+}
+
+function contienePersonaje(momiaY, momiaX) {
+    if (div.item(momiaY * 21 + momiaX).classList.contains('personajeTop') ||
+        div.item(momiaY * 21 + momiaX).classList.contains('personajeRight') ||
+        div.item(momiaY * 21 + momiaX).classList.contains('personajeBottom') ||
+        div.item(momiaY * 21 + momiaX).classList.contains('personajeLeft')) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -209,7 +270,7 @@ function accionarMuro(indexMuro, momiaY, momiaX) {
             score.innerHTML = parseInt(score.innerHTML) + 200;
             break;
         case 3: // Pergamino
-
+            pergaminoActivo = true;
             break;
         case 4: // Llave
             llaveEncontrada = true;
@@ -342,6 +403,9 @@ function moverJugador(cursor) {
         comprobarMuros();
     }
 
+    // Si chcocamos con una momia la eliminamos
+    eliminarMomiaChocada();
+
     // Actualizamos la posición del personaje en el mapa
     mapa[posPj[0]][posPj[1]] = 2;
     if (mapa[0][8] == 2 && llaveEncontrada && urnaEncontrada) {
@@ -350,6 +414,7 @@ function moverJugador(cursor) {
     // Si ya hemos pasado por ahí eliminamos la clase que oculta a nuestro personaje
     div.item(posPj[0] * 21 + posPj[1]).classList.remove('caminoPisado');
 
+    console.log(momias.length);
     // console.log(estadoMuros);
     // console.log(estadoMuros.length);
     // console.log(momias.length);

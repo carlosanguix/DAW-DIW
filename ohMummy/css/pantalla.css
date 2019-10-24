@@ -5,11 +5,12 @@
     justify-content: center;
     align-items: center;
     grid-template-areas: "level level level level" "score puntos vidas divVidas" "mapa mapa mapa mapa";
+    font-size: 30px;
 }
 
 body {
     font-family: 'Press Start 2P', cursive;
-    background-color: orange;
+    background-color: blue;
 }
 
 .level {
@@ -27,8 +28,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     width: 210px;
-    height: 100px;
-    font-size: 30px;
+    height: 60px;
 }
 
 .puntos {
@@ -37,18 +37,16 @@ body {
     align-items: center;
     justify-content: center;
     width: 210px;
-    height: 100px;
-    font-size: 30px;
+    height: 60px;
 }
 
 .vidas {
     display: flex;
     grid-area: vidas;
     align-items: center;
-    justify-content: flex-endd;
+    justify-content: flex-end;
     width: 210px;
-    height: 100px;
-    font-size: 30px;
+    height: 60px;
 }
 
 .divVidas {
@@ -57,8 +55,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 210px;
-    height: 100px;
-    font-size: 30px;
+    height: 60px;
 }
 
 .mapa {
@@ -106,7 +103,7 @@ body {
 }
 
 .muro {
-    background-color: orange;
+    background-color: blue;
 }
 
 .muroRevelado {
@@ -131,6 +128,12 @@ body {
 
 .muroCentralPergamino {
     content: url('../img/pergamino.gif');
+}
+
+.vida {
+    content: url('../img/vida.png');
+    height: 30px;
+    width: 30px;
 }
 
 .caminoPisado {
