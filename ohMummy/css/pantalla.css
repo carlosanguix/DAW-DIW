@@ -1,18 +1,64 @@
 .pantalla {
     display: grid;
-    grid-template-columns: 2;
-    grid-template-rows: 2;
+    grid-template-columns: 4;
+    grid-template-rows: 3;
     justify-content: center;
     align-items: center;
-    grid-template-areas: "score vidas" "mapa mapa";
+    grid-template-areas: "level level level level" "score puntos vidas divVidas" "mapa mapa mapa mapa";
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: orange;
+}
+
+.level {
+    display: flex;
+    grid-area: level;
+    align-items: center;
+    justify-content: center;
+    width: 4fr;
+    height: 100%;
 }
 
 .score {
+    display: flex;
     grid-area: score;
+    align-items: center;
+    justify-content: flex-end;
+    width: 210px;
+    height: 100px;
+    font-size: 30px;
+}
+
+.puntos {
+    display: flex;
+    grid-area: puntos;
+    align-items: center;
+    justify-content: center;
+    width: 210px;
+    height: 100px;
+    font-size: 30px;
 }
 
 .vidas {
+    display: flex;
     grid-area: vidas;
+    align-items: center;
+    justify-content: flex-endd;
+    width: 210px;
+    height: 100px;
+    font-size: 30px;
+}
+
+.divVidas {
+    display: flex;
+    grid-area: divVidas;
+    align-items: center;
+    justify-content: center;
+    width: 210px;
+    height: 100px;
+    font-size: 30px;
 }
 
 .mapa {
@@ -27,7 +73,6 @@
 }
 
 .personajeTop {
-    background-color: black;
     content: url("../img/pj.gif");
     transform: rotate(-90deg);
     height: 100%;
@@ -35,14 +80,12 @@
 }
 
 .personajeRight {
-    background-color: black;
     content: url("../img/pj.gif");
     height: 100%;
     width: 100%;
 }
 
 .personajeBottom {
-    background-color: black;
     content: url("../img/pj.gif");
     transform: rotate(90deg);
     height: 100%;
@@ -50,7 +93,6 @@
 }
 
 .personajeLeft {
-    background-color: black;
     content: url("../img/pj.gif");
     transform: rotate(180deg);
     height: 100%;
@@ -58,8 +100,7 @@
 }
 
 .momia {
-    background-color: black;
-    content: url('../img/mummy.gif');
+    content: url('../img/mummy.gif') !important;
     height: 100%;
     width: 100%;
 }
@@ -76,6 +117,10 @@
     content: url('../img/key.png');
 }
 
+.muroCentralUrna {
+    content: url('../img/fresa.png');
+}
+
 .muroCentralMomia {
     content: url('../img/mummy.gif');
 }
@@ -89,7 +134,6 @@
 }
 
 .caminoPisado {
-    background-color: black;
     content: url("../img/ball.png");
     height: 100%;
     width: 100%;
