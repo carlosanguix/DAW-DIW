@@ -1,16 +1,172 @@
 .pantalla {
     display: grid;
-    grid-template-columns: 4;
+    grid-template-columns: 5;
     grid-template-rows: 3;
     justify-content: center;
     align-items: center;
-    grid-template-areas: "level level level level" "score puntos vidas divVidas" "mapa mapa mapa mapa";
+    grid-template-areas: "level level level level vacio" "score puntos vidas divVidas vacio" "mapa mapa mapa mapa leyenda";
     font-size: 30px;
 }
 
 body {
     font-family: 'Press Start 2P', cursive;
-    background-color: blue;
+    background-color: rgb(64, 64, 172);
+}
+
+.leyenda {
+    display: grid;
+    grid-area: leyenda;
+    grid-template-rows: repeat(8, 63px);
+    margin-left: 10px;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid black;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+    padding: 5px;
+}
+
+.contenedorLlave {
+    display: grid;
+    grid-template-areas: "imagenLlave llaveEncontrada";
+}
+
+.llave {
+    grid-area: imagenLlave;
+    justify-self: right;
+    height: 50px;
+    width: 50px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/key.png');
+    margin-right: 5px;
+}
+
+.llaveEncontrada {
+    grid-area: llaveEncontrada;
+    justify-self: left;
+    align-self: center;
+    height: 25px;
+    width: 25px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/wrong.png');
+    background-color: white;
+}
+
+.llaveEncontradaTrue {
+    grid-area: llaveEncontrada;
+    justify-self: left;
+    align-self: center;
+    height: 25px;
+    width: 25px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/check.png');
+    background-color: white;
+}
+
+.contenedorUrna {
+    display: grid;
+    grid-template-areas: "imagenUrna urnaEncontrada";
+}
+
+.urna {
+    grid-area: imagenUrna;
+    justify-self: right;
+    height: 50px;
+    width: 50px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/fresa.png');
+    margin-right: 5px;
+}
+
+.urnaEncontrada {
+    grid-area: urnaEncontrada;
+    justify-self: left;
+    align-self: center;
+    height: 25px;
+    width: 25px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/wrong.png');
+    background-color: white;
+}
+
+.urnaEncontradaTrue {
+    grid-area: urnaEncontrada;
+    justify-self: left;
+    align-self: center;
+    height: 25px;
+    width: 25px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/check.png');
+    background-color: white;
+}
+
+.contenedorEnemigos {
+    display: grid;
+    grid-template-areas: "imagenEnemigo cantidadEnemigos";
+}
+
+.enemigos {
+    grid-area: imagenEnemigo;
+    justify-self: right;
+    height: 50px;
+    width: 50px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/mummy.gif');
+    margin-right: 5px;
+}
+
+.cantidadEnemigos {
+    grid-area: cantidadEnemigos;
+    justify-self: left;
+    align-self: center;
+}
+
+.contenedorPergamino {
+    display: grid;
+    grid-template-areas: "imagenPergamino pergaminoEncontrado";
+}
+
+.pergamino {
+    grid-area: imagenPergamino;
+    justify-self: right;
+    height: 50px;
+    width: 50px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/pergamino.gif');
+    margin-right: 5px;
+}
+
+.pergaminoEncontrado {
+    grid-area: pergaminoEncontrado;
+    justify-self: left;
+    align-self: center;
+    height: 25px;
+    width: 25px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/wrong.png');
+    background-color: white;
+}
+
+.pergaminoEncontradoTrue {
+    grid-area: pergaminoEncontrado;
+    justify-self: left;
+    align-self: center;
+    height: 25px;
+    width: 25px;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    content: url('../img/check.png');
+    background-color: white;
 }
 
 .level {
@@ -103,7 +259,7 @@ body {
 }
 
 .muro {
-    background-color: blue;
+    background-color: rgb(64, 64, 172);
 }
 
 .muroRevelado {

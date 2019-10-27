@@ -5,15 +5,19 @@ var mapa = [];
 for (let i = 0; i < 14; i++) {
     mapa[i] = new Array(21);
 }
+var copiaMapa;
 // Array de posicion Y e X del personaje [Y][X]
 var posPj = new Array();
 /* Matriz de momias con arrays para los ejes Y, X de cada momia
 Ej de 3 momias {momia1 - [Y][X], momia2 - [Y][X], momia3 - [Y][x]}*/
+var cantidadMomias = 1;
+var momiasPuestas = 0;
 var momias = new Array();
 /* Estado de los muros (compuestos por 6 casillas [3*2]) 
    0 No completado
    1 Rodeado*/
 var estadoMuros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var copiaEstadoMuros = JSON.parse(JSON.stringify(estadoMuros));
 /* Contenido de los muros  
  0 Nada x5 
  1 Momias x2
@@ -42,9 +46,15 @@ var divVidas = document.getElementsByClassName('divVidas')[0];
 crearMapa(mapa);
 // Movemos las momias con un intervalo de 3s para siempre
 setInterval(moverMomias, 600);
-// Barajamos el Array para aleatorizar lo que habrá dentro de los pilares
-// aleatorizarContenidoMuros();
 console.log(contenidoMuros);
+
+// Añadimos el total de vidas
+var divVidas = document.getElementsByClassName('divVidas')[0];
+for (let i = 0; i < vidas; i++) {
+    let unaVida = document.createElement('div');
+    unaVida.classList.add('vida');
+    divVidas.appendChild(unaVida);
+}
 
 /*  0 - Camino sin pisar
     1 - Muro
@@ -53,15 +63,9 @@ console.log(contenidoMuros);
     4 - Camino pisado
     5 - Muro revelado*/
 function crearMapa(mapa) {
+    // Barajamos el Array para aleatorizar lo que habrá dentro de los pilares
+    // aleatorizarContenidoMuros();
 
-    let divVidas = document.getElementsByClassName('divVidas')[0];
-    for (let i = 0; i < vidas; i++) {
-        let unaVida = document.createElement('div');
-        unaVida.classList.add('vida');
-        divVidas.appendChild(unaVida);
-    }
-
-    let momiaEnMapa = false;
     // Creamos la fila superior
     for (let i = 0; i < 21; i++) {
         let divInterior = document.createElement('div');
@@ -70,7 +74,7 @@ function crearMapa(mapa) {
             divInterior.classList.add('muro');
         } else {
             // Le indicamos la posición de inicio del personaje
-            posPj.push(0, 8);
+            posPj = [0, 8];
             mapa[0][i] = 0;
             divInterior.classList.add('camino');
             divInterior.classList.add('personajeBottom');
@@ -82,17 +86,14 @@ function crearMapa(mapa) {
         for (let columna = 0; columna < 21; columna++) {
             let divInterior = document.createElement('div');
             if (columna % 4 == 0 || columna == 0 || fila % 3 == 0 || fila == 0) {
-                var random = Math.floor(Math.random() * 5);
-                // Colocamos la primera momia en una posición random a partir de la segunda mitad del tablero ejeX o ejeY
-                // ESTA MAL (a veces no aparece la momia)
-                if (fila > 6 && columna > 8 && ((momiaEnMapa == false && random == 0) || (momiaEnMapa == false && columna > 19 && fila > 12))) {
-                    // Indicamos un 3 en esa posición de la matriz e indicamos que ya se ha colocado la momia en el mapa
-                    mapa[fila + 1][columna] = 3;
-                    momiaEnMapa = true;
-                    // Nos quedamos con las posiciones de la momia y la añadimos al array de momias
+                // var random = Math.floor(Math.random() * 5);
+                if (fila >= 9 && fila % 3 == 0 && columna % 4 == 0 && momiasPuestas < cantidadMomias) {
+                    mapa[fila + 1][columna] = 0;
                     momias.push(fila + 1, columna);
                     divInterior.classList.add('camino');
                     divInterior.classList.add('momia');
+                    momiasPuestas++;
+                    // cantidadMomias--;
                 } else {
                     mapa[fila + 1][columna] = 0;
                     divInterior.classList.add('camino');
@@ -104,8 +105,19 @@ function crearMapa(mapa) {
             divMap.appendChild(divInterior);
         }
     }
+    copiaMapa = JSON.parse(JSON.stringify(mapa));
 }
 
+function limpiarMapa() {
+    let divVidas = document.getElementsByClassName('divVidas')[0];
+    for (let i = 0; i < vidas; i++) {
+        let unaVida = document.createElement('div');
+        unaVida.classList.add('vida');
+        divVidas.appendChild(unaVida);
+    }
+}
+
+// Función con la que movemos todas las momias
 function moverMomias() {
     let pjY = posPj[0];
     let pjX = posPj[1];
@@ -115,20 +127,32 @@ function moverMomias() {
         let momiaX = momias[i + 1];
         let distanciaY = momiaY - pjY;
         let distanciaX = momiaX - pjX;
+        let yMenos1 = false;
+        let yMas1 = false;
+        let xMenos1 = false;
+        let xMas1 = false;
         // Momias en las casillas adyacentes?
-        let yMenos1 = !div.item((momiaY - 1) * 21 + momiaX).classList.contains('momia');
-        let yMas1 = !div.item((momiaY + 1) * 21 + momiaX).classList.contains('momia');
-        let xMenos1 = !div.item(momiaY * 21 + (momiaX - 1)).classList.contains('momia');
-        let xMas1 = !div.item(momiaY * 21 + (momiaX + 1)).classList.contains('momia');
+        if (momiaY - 1 >= 0 && !(div.item((momiaY - 1) * 21 + momiaX).classList.contains('momia'))) {
+            yMenos1 = true;
+        }
+        if (momiaY + 1 <= 13 && !(div.item((momiaY + 1) * 21 + momiaX).classList.contains('momia'))) {
+            yMas1 = true;
+        }
+        if (momiaX - 1 >= 0 && !(div.item(momiaY * 21 + (momiaX - 1)).classList.contains('momia'))) {
+            xMenos1 = true;
+        }
+        if (momiaX + 1 < 21 && !(div.item(momiaY * 21 + (momiaX + 1)).classList.contains('momia'))) {
+            xMas1 = true;
+        }
         // Borramos la imagen de la momia del paso anterior
         div.item(momiaY * 21 + momiaX).classList.remove('momia');
+        // TODO Peta aquí muy a menudo
         if (Math.abs(distanciaY) > Math.abs(distanciaX) && mapa[momiaY - 1][momiaX] != 1 && mapa[momiaY + 1][momiaX] != 1 && yMenos1 && yMas1) {
             if (distanciaY < 0) {
                 momiaY++;
             } else {
                 momiaY--;
             }
-
         } else if (Math.abs(distanciaY) < Math.abs(distanciaX) && mapa[momiaY][momiaX - 1] != 1 && mapa[momiaY][momiaX + 1] != 1 && xMenos1 && xMas1) {
             if (distanciaX < 0) {
                 momiaX++;
@@ -144,7 +168,6 @@ function moverMomias() {
                 } else if (distanciaX < 0 && mapa[momiaY][momiaX + 1] != 1 && xMas1) {
                     momiaX++;
                 } else if (distanciaX > 0 && mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
-                    console.log('asd');
                     momiaX--;
                 } else if (distanciaX == distanciaY) {
                     let rnd = Math.floor(Math.random() * 2)
@@ -153,7 +176,6 @@ function moverMomias() {
                     } else if (mapa[momiaY + 1][momiaX] != 1 && yMas1) {
                         momiaY++;
                     } else if (mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
-                        console.log('asd');
                         momiaX--;
                     } else if (mapa[momiaY][momiaX + 1] != 1 && xMas1) {
                         momiaX++;
@@ -161,7 +183,6 @@ function moverMomias() {
                 }
             }
         }
-        //console.log(momiaY + ", " + momiaX);
         momias[i] = momiaY;
         momias[i + 1] = momiaX;
         // La posición de la momia coincide con la del pj, eliminamos la momia
@@ -170,13 +191,16 @@ function moverMomias() {
             div.item(momiaY * 21 + momiaX).classList.add('momia');
             eliminarMomiaChocada();
             eliminarMomiaEnPj();
+            cantidadMomias--;
+
         } else {
             // Dibujamos la momia en su siguiente paso
             div.item(momiaY * 21 + momiaX).classList.add('momia');
         }
-
-        // console.table(mapa);
-        //console.log("Momia: " + momias[i]);
+        yMenos1 = false;
+        yMas1 = false;
+        xMenos1 = false;
+        xMas1 = false;
     }
 }
 
@@ -192,12 +216,15 @@ function eliminarMomiaChocada() {
             vidas--;
         } else {
             pergaminoActivo = false;
+
         }
         div.item(posPj[0] * 21 + posPj[1]).classList.remove('momia');
+        cantidadMomias--;
     }
     eliminarMomiaEnPj();
 }
 
+// Función con la que eliminamos la momia que ha chocado con el personaje
 function eliminarMomiaEnPj() {
     for (let i = 0; i < momias.length; i += 2) {
         if (momias[i] == posPj[0] && momias[i + 1] == posPj[1]) {
@@ -206,6 +233,7 @@ function eliminarMomiaEnPj() {
     }
 }
 
+// Funcion con la que comprobamos el personaje está en la posición indicada
 function contienePersonaje(momiaY, momiaX) {
     if (div.item(momiaY * 21 + momiaX).classList.contains('personajeTop') ||
         div.item(momiaY * 21 + momiaX).classList.contains('personajeRight') ||
@@ -237,12 +265,19 @@ function comprobarMuros() {
         // Recorremos columnas
         for (let x = 1; x < mapa[0].length; x += 4) {
             if (estadoMuros[indexMuro] == 0) {
-                // Comprobamos los laterales de la caja(muro), si son camino pisado...
-                if (mapa[y][x - 1] == 4 && mapa[y - 1][x] == 4 &&
-                    mapa[y - 1][x + 1] == 4 && mapa[y - 1][x + 2] == 4 &&
-                    mapa[y][x + 3] == 4 && mapa[y + 1][x + 3] == 4 &&
-                    mapa[y + 2][x + 2] == 4 && mapa[y + 2][x + 1] == 4 &&
-                    mapa[y + 2][x] == 4 && mapa[y + 1][x - 1] == 4) {
+                let muroCompletado = true;
+                for (let i = y - 1; i <= y + 2; i++) {
+                    for (let j = x - 1; j <= x + 3; j++) {
+                        if ((i == y - 1 || i == y + 2 || j == x - 1 || j == x + 3) && mapa[i][j] != 4) {
+                            muroCompletado = false;
+                            break;
+                        }
+                        if (!muroCompletado) {
+                            break;
+                        }
+                    }
+                }
+                if (muroCompletado) {
                     // Pintamos el pilar en el que nos encontramos
                     pintarPilar(y, x, indexMuro);
                     // Le decimos que ese muro en el array ya está comprobado
@@ -256,12 +291,14 @@ function comprobarMuros() {
     }
 }
 
+// Función con la que le damos la propiedad que le corresponde a dicho muro
 function accionarMuro(indexMuro, momiaY, momiaX) {
     switch (contenidoMuros[indexMuro]) {
         case 1: // Momia
             // Añadimos momia al array con las coordenadas nuevas
             setTimeout(function() {
                 momias.push(momiaY, momiaX - 1);
+                cantidadMomias++;
                 div.item(momiaY * 21 + momiaX - 1).classList.add('momia');
             }, 700);
             break;
@@ -271,12 +308,22 @@ function accionarMuro(indexMuro, momiaY, momiaX) {
             break;
         case 3: // Pergamino
             pergaminoActivo = true;
+            let checkPergamino = document.getElementsByClassName('pergaminoEncontrado')[0];
+            checkPergamino.classList.remove('pergaminoEncontrado');
+            checkPergamino.classList.add('pergaminoEncontradoTrue');
             break;
         case 4: // Llave
             llaveEncontrada = true;
+            let checkLlave = document.getElementsByClassName('llaveEncontrada')[0];
+            checkLlave.classList.remove('llaveEncontrada');
+            checkLlave.classList.add('llaveEncontradaTrue');
+            console.log(checkLlave);
             break;
         case 5: // Urna
             urnaEncontrada = true;
+            let checkUrna = document.getElementsByClassName('urnaEncontrada')[0];
+            checkUrna.classList.remove('urnaEncontrada');
+            checkUrna.classList.add('urnaEncontradaTrue');
             break;
 
         default:
@@ -408,18 +455,22 @@ function moverJugador(cursor) {
 
     // Actualizamos la posición del personaje en el mapa
     mapa[posPj[0]][posPj[1]] = 2;
+
+    // Ajustamos los parámetros para el siguiente nivel
     if (mapa[0][8] == 2 && llaveEncontrada && urnaEncontrada) {
-        alert("Nivel superado");
+        estadoMuros = JSON.parse(JSON.stringify(copiaEstadoMuros));
+        momias = [];
+        mapa = JSON.parse(JSON.stringify(copiaMapa));
+        llaveEncontrada = false;
+        urnaEncontrada = false;
+        divMap.innerHTML = "";
+        cantidadMomias++;
+        level++;
+        let nivel = document.getElementsByClassName('level')[0];
+        nivel.innerHTML = "Nivel " + level;
+        momiasPuestas = 0;
+        crearMapa(mapa);
     }
     // Si ya hemos pasado por ahí eliminamos la clase que oculta a nuestro personaje
     div.item(posPj[0] * 21 + posPj[1]).classList.remove('caminoPisado');
-
-    console.log(momias.length);
-    // console.log(estadoMuros);
-    // console.log(estadoMuros.length);
-    // console.log(momias.length);
-    // console.log("Momia: " + momias[0]);
-    // console.log("Pj:    " + posPj);
-    // console.table(mapa);
-    // console.log(mapa[0].length)
 }
