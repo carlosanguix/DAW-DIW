@@ -6,12 +6,13 @@ for (let i = 0; i < 14; i++) {
     mapa[i] = new Array(21);
 }
 var copiaMapa;
-// Array de posicion Y e X del personaje [Y][X]
+// Array de posicion Y e X del personaje [Y][X] 
 var posPj = new Array();
 /* Matriz de momias con arrays para los ejes Y, X de cada momia
 Ej de 3 momias {momia1 - [Y][X], momia2 - [Y][X], momia3 - [Y][x]}*/
 var cantidadMomias = 1;
 var momiasPuestas = 0;
+var momiasSePuedenMover = false;
 var momias = new Array();
 /* Estado de los muros (compuestos por 6 casillas [3*2]) 
    0 No completado
@@ -45,8 +46,7 @@ var divVidas = document.getElementsByClassName('divVidas')[0];
 // Llamamos a la función que nos crea el mapa
 crearMapa(mapa);
 // Movemos las momias con un intervalo de 3s para siempre
-setInterval(moverMomias, 600);
-console.log(contenidoMuros);
+setInterval(moverMomias, 500);
 
 // Añadimos el total de vidas
 var divVidas = document.getElementsByClassName('divVidas')[0];
@@ -86,14 +86,12 @@ function crearMapa(mapa) {
         for (let columna = 0; columna < 21; columna++) {
             let divInterior = document.createElement('div');
             if (columna % 4 == 0 || columna == 0 || fila % 3 == 0 || fila == 0) {
-                // var random = Math.floor(Math.random() * 5);
                 if (fila >= 9 && fila % 3 == 0 && columna % 4 == 0 && momiasPuestas < cantidadMomias) {
                     mapa[fila + 1][columna] = 0;
                     momias.push(fila + 1, columna);
                     divInterior.classList.add('camino');
                     divInterior.classList.add('momia');
                     momiasPuestas++;
-                    // cantidadMomias--;
                 } else {
                     mapa[fila + 1][columna] = 0;
                     divInterior.classList.add('camino');
@@ -119,89 +117,158 @@ function limpiarMapa() {
 
 // Función con la que movemos todas las momias
 function moverMomias() {
-    let pjY = posPj[0];
-    let pjX = posPj[1];
-    for (let i = 0; i < momias.length; i += 2) {
-        /*Comprobamos el valor absoluto de la distancia entre cada una de las momias y el Pj*/
-        let momiaY = momias[i];
-        let momiaX = momias[i + 1];
-        let distanciaY = momiaY - pjY;
-        let distanciaX = momiaX - pjX;
-        let yMenos1 = false;
-        let yMas1 = false;
-        let xMenos1 = false;
-        let xMas1 = false;
-        // Momias en las casillas adyacentes?
-        if (momiaY - 1 >= 0 && !(div.item((momiaY - 1) * 21 + momiaX).classList.contains('momia'))) {
-            yMenos1 = true;
-        }
-        if (momiaY + 1 <= 13 && !(div.item((momiaY + 1) * 21 + momiaX).classList.contains('momia'))) {
-            yMas1 = true;
-        }
-        if (momiaX - 1 >= 0 && !(div.item(momiaY * 21 + (momiaX - 1)).classList.contains('momia'))) {
-            xMenos1 = true;
-        }
-        if (momiaX + 1 < 21 && !(div.item(momiaY * 21 + (momiaX + 1)).classList.contains('momia'))) {
-            xMas1 = true;
-        }
-        // Borramos la imagen de la momia del paso anterior
-        div.item(momiaY * 21 + momiaX).classList.remove('momia');
-        // TODO Peta aquí muy a menudo
-        if (Math.abs(distanciaY) > Math.abs(distanciaX) && mapa[momiaY - 1][momiaX] != 1 && mapa[momiaY + 1][momiaX] != 1 && yMenos1 && yMas1) {
-            if (distanciaY < 0) {
-                momiaY++;
-            } else {
-                momiaY--;
+
+    if (momiasSePuedenMover) {
+        let pjY = posPj[0];
+        let pjX = posPj[1];
+        for (let i = 0; i < momias.length; i += 2) {
+
+            /*Comprobamos el valor absoluto de la distancia entre cada una de las momias y el Pj*/
+            let momiaY = momias[i];
+            let momiaX = momias[i + 1];
+            let distanciaY = momiaY - pjY;
+            let distanciaX = momiaX - pjX;
+            let yMenos1 = false;
+            let yMas1 = false;
+            let xMenos1 = false;
+            let xMas1 = false;
+            // Momias o pilares en las casillas adyacentes?
+            if (momiaY - 1 > 0 && !(div.item((momiaY - 1) * 21 + momiaX).classList.contains('momia'))) {
+                if (mapa[momiaY - 1][momiaX] != 1) {
+                    yMenos1 = true;
+                }
             }
-        } else if (Math.abs(distanciaY) < Math.abs(distanciaX) && mapa[momiaY][momiaX - 1] != 1 && mapa[momiaY][momiaX + 1] != 1 && xMenos1 && xMas1) {
-            if (distanciaX < 0) {
-                momiaX++;
-            } else {
-                momiaX--;
+            if (momiaY + 1 < 14 && !(div.item((momiaY + 1) * 21 + momiaX).classList.contains('momia'))) {
+                if (mapa[momiaY + 1][momiaX] != 1) {
+                    yMas1 = true;
+                }
             }
-        } else {
-            if (distanciaY == 0 && distanciaX == 0) {} else {
-                if (distanciaY < 0 && mapa[momiaY + 1][momiaX] != 1 && yMas1) {
+            if (momiaX - 1 >= 0 && !(div.item(momiaY * 21 + (momiaX - 1)).classList.contains('momia'))) {
+                if (mapa[momiaY][momiaX - 1] != 1) {
+                    xMenos1 = true;
+                }
+            }
+            if (momiaX + 1 < 20 && !(div.item(momiaY * 21 + (momiaX + 1)).classList.contains('momia'))) {
+                if (mapa[momiaY][momiaX + 1] != 1) {
+                    xMas1 = true;
+                }
+            }
+
+            /*
+            if (momiaY - 1 > 0 && !(div.item((momiaY - 1) * 21 + momiaX).classList.contains('momia'))) {
+                yMenos1 = true;
+            }
+            if (momiaY + 1 < 14 && !(div.item((momiaY + 1) * 21 + momiaX).classList.contains('momia'))) {
+                yMas1 = true;
+            }
+            if (momiaX - 1 >= 0 && !(div.item(momiaY * 21 + (momiaX - 1)).classList.contains('momia'))) {
+                xMenos1 = true;
+            }
+            if (momiaX + 1 < 20 && !(div.item(momiaY * 21 + (momiaX + 1)).classList.contains('momia'))) {
+                xMas1 = true;
+            }
+            */
+
+            // Borramos la imagen de la momia del paso anterior
+            div.item(momiaY * 21 + momiaX).classList.remove('momia');
+            // TODO Peta aquí muy a menudo
+            if (Math.abs(distanciaY) > Math.abs(distanciaX) && yMenos1 && yMas1) {
+                if (distanciaY < 0) {
                     momiaY++;
-                } else if (distanciaY > 0 && mapa[momiaY - 1][momiaX] != 1 && yMenos1) {
+                } else {
                     momiaY--;
-                } else if (distanciaX < 0 && mapa[momiaY][momiaX + 1] != 1 && xMas1) {
+                }
+            } else if (Math.abs(distanciaY) < Math.abs(distanciaX) && xMenos1 && xMas1) {
+                if (distanciaX < 0) {
                     momiaX++;
-                } else if (distanciaX > 0 && mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
+                } else {
                     momiaX--;
-                } else if (distanciaX == distanciaY) {
-                    let rnd = Math.floor(Math.random() * 2)
-                    if (mapa[momiaY - 1][momiaX] != 1 && yMenos1) {
-                        momiaY--;
-                    } else if (mapa[momiaY + 1][momiaX] != 1 && yMas1) {
+                }
+            } else {
+                if (distanciaY == 0 && distanciaX == 0) {} else {
+                    if (distanciaY < 0 && yMas1) {
                         momiaY++;
-                    } else if (mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
-                        momiaX--;
-                    } else if (mapa[momiaY][momiaX + 1] != 1 && xMas1) {
+                    } else if (distanciaY > 0 && yMenos1) {
+                        momiaY--;
+                    } else if (distanciaX < 0 && xMas1) {
                         momiaX++;
+                    } else if (distanciaX > 0 && xMenos1) {
+                        momiaX--;
+                    } else if (distanciaX == distanciaY) {
+                        let rnd = Math.floor(Math.random() * 2)
+                        if (yMenos1) {
+                            momiaY--;
+                        } else if (yMas1) {
+                            momiaY++;
+                        } else if (xMenos1) {
+                            momiaX--;
+                        } else if (xMas1) {
+                            momiaX++;
+                        }
                     }
                 }
             }
-        }
-        momias[i] = momiaY;
-        momias[i + 1] = momiaX;
-        // La posición de la momia coincide con la del pj, eliminamos la momia
-        let divConPj = contienePersonaje(momiaY, momiaX);
-        if (divConPj) {
-            div.item(momiaY * 21 + momiaX).classList.add('momia');
-            eliminarMomiaChocada();
-            eliminarMomiaEnPj();
-            cantidadMomias--;
+            /*
+            if (Math.abs(distanciaY) > Math.abs(distanciaX) && mapa[momiaY - 1][momiaX] != 1 && mapa[momiaY + 1][momiaX] != 1 && yMenos1 && yMas1) {
+                if (distanciaY < 0) {
+                    momiaY++;
+                } else {
+                    momiaY--;
+                }
+            } else if (Math.abs(distanciaY) < Math.abs(distanciaX) && mapa[momiaY][momiaX - 1] != 1 && mapa[momiaY][momiaX + 1] != 1 && xMenos1 && xMas1) {
+                if (distanciaX < 0) {
+                    momiaX++;
+                } else {
+                    momiaX--;
+                }
+            } else {
+                if (distanciaY == 0 && distanciaX == 0) {} else {
+                    if (distanciaY < 0 && mapa[momiaY + 1][momiaX] != 1 && yMas1) {
+                        momiaY++;
+                    } else if (distanciaY > 0 && mapa[momiaY - 1][momiaX] != 1 && yMenos1) {
+                        momiaY--;
+                    } else if (distanciaX < 0 && mapa[momiaY][momiaX + 1] != 1 && xMas1) {
+                        momiaX++;
+                    } else if (distanciaX > 0 && mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
+                        momiaX--;
+                    } else if (distanciaX == distanciaY) {
+                        let rnd = Math.floor(Math.random() * 2)
+                        if (mapa[momiaY - 1][momiaX] != 1 && yMenos1) {
+                            momiaY--;
+                        } else if (mapa[momiaY + 1][momiaX] != 1 && yMas1) {
+                            momiaY++;
+                        } else if (mapa[momiaY][momiaX - 1] != 1 && xMenos1) {
+                            momiaX--;
+                        } else if (mapa[momiaY][momiaX + 1] != 1 && xMas1) {
+                            momiaX++;
+                        }
+                    }
+                }
+            }
+            */
 
-        } else {
-            // Dibujamos la momia en su siguiente paso
-            div.item(momiaY * 21 + momiaX).classList.add('momia');
+            momias[i] = momiaY;
+            momias[i + 1] = momiaX;
+            // La posición de la momia coincide con la del pj, eliminamos la momia
+            let divConPj = contienePersonaje(momiaY, momiaX);
+            if (divConPj) {
+                div.item(momiaY * 21 + momiaX).classList.add('momia');
+                eliminarMomiaChocada();
+                eliminarMomiaEnPj();
+                let enemigos = document.getElementsByClassName('cantidadEnemigos')[0];
+                enemigos.innerHTML = "x" + cantidadMomias;
+
+            } else {
+                // Dibujamos la momia en su siguiente paso
+                div.item(momiaY * 21 + momiaX).classList.add('momia');
+            }
+            yMenos1 = false;
+            yMas1 = false;
+            xMenos1 = false;
+            xMas1 = false;
         }
-        yMenos1 = false;
-        yMas1 = false;
-        xMenos1 = false;
-        xMas1 = false;
     }
+
 }
 
 // Funcion con la que eliminamos la momia con la que nos hemos chocado y le quitamos una vida al personaje dependiendo de si tiene el pergamino o no.
@@ -216,10 +283,15 @@ function eliminarMomiaChocada() {
             vidas--;
         } else {
             pergaminoActivo = false;
+            let checkPergamino = document.getElementsByClassName('pergaminoEncontradoTrue')[0];
+            checkPergamino.classList.remove('pergaminoEncontradoTrue');
+            checkPergamino.classList.add('pergaminoEncontrado');
 
         }
         div.item(posPj[0] * 21 + posPj[1]).classList.remove('momia');
         cantidadMomias--;
+        let enemigos = document.getElementsByClassName('cantidadEnemigos')[0];
+        enemigos.innerHTML = "x" + cantidadMomias;
     }
     eliminarMomiaEnPj();
 }
@@ -295,12 +367,13 @@ function comprobarMuros() {
 function accionarMuro(indexMuro, momiaY, momiaX) {
     switch (contenidoMuros[indexMuro]) {
         case 1: // Momia
-            // Añadimos momia al array con las coordenadas nuevas
+            cantidadMomias++;
             setTimeout(function() {
                 momias.push(momiaY, momiaX - 1);
-                cantidadMomias++;
                 div.item(momiaY * 21 + momiaX - 1).classList.add('momia');
             }, 700);
+            let enemigos = document.getElementsByClassName('cantidadEnemigos')[0];
+            enemigos.innerHTML = "x" + cantidadMomias;
             break;
         case 2: // Puntos
             let score = document.getElementsByClassName("puntos")[0];
@@ -317,7 +390,6 @@ function accionarMuro(indexMuro, momiaY, momiaX) {
             let checkLlave = document.getElementsByClassName('llaveEncontrada')[0];
             checkLlave.classList.remove('llaveEncontrada');
             checkLlave.classList.add('llaveEncontradaTrue');
-            console.log(checkLlave);
             break;
         case 5: // Urna
             urnaEncontrada = true;
@@ -331,11 +403,10 @@ function accionarMuro(indexMuro, momiaY, momiaX) {
     }
 }
 
-// Funcion con la que recorremos el pilar por dentro
+// Funcion con la que recorremos el pilar por dentro y lo pintamos
 function pintarPilar(ejeY, ejeX, indexMuro) {
     for (let y = 0; y < 2; y++) { // Filas
         for (let x = 0; x < 3; x++) { // Columnas
-
             div.item((ejeY + y) * 21 + (ejeX + x)).classList.remove('muro');
             if (y == 0 && x == 1) {
                 let elementoAPintar = elegirElemento(indexMuro);
@@ -358,7 +429,6 @@ function elegirElemento(indexMuro) {
             break;
         case 1:
             elemento = 'muroCentralMomia';
-            // TODO: (No se si aqui o donde) Con una transición hacer que la momia sale del cuadrado superior y echa a andar
             break;
         case 2:
             elemento = 'muroCentralCofre';
@@ -380,8 +450,6 @@ function elegirElemento(indexMuro) {
     return elemento;
 }
 
-
-
 // Nos quedamos con la tecla solo si hemos pulsado alguna flecha o (WASD)
 window.addEventListener("keydown", function(key) {
     let cursor = key.key;
@@ -399,7 +467,6 @@ window.addEventListener("keydown", function(key) {
     }
 });
 
-
 // Función con la que cada vez que damos un paso eliminamos las clases que afectan al personaje en el paso dado anteriormente
 function eliminarDivPj() {
     div.item(posPj[0] * 21 + posPj[1]).classList.remove('personajeTop');
@@ -410,13 +477,15 @@ function eliminarDivPj() {
 
 // Función con la que movemos al jugador según la tecla que hayamos apretado
 function moverJugador(cursor) {
+
+    momiasSePuedenMover = true;
     div.item(posPj[0] * 21 + posPj[1]).classList.add('caminoPisado'); // Perdemos la momia en la matriz del mapa (la conservamos en el array de momias)
     // Modificamos la posicion anterior del PJ para que sea camino pisado
     mapa[posPj[0]][posPj[1]] = 4;
+    // Modificamos su coordenada (Y-1 Arriba, Y+1 Abajo, X+1 Derecha, X-1 Izq)
     switch (cursor) {
         case "ArrowUp":
             if (posPj[0] - 1 >= 0 && mapa[posPj[0] - 1][posPj[1]] != 1) {
-                // Modificamos su coordenada (Y-1 Arriba, Y+1 Abajo, X+1 Derecha, X-1 Izq)
                 eliminarDivPj();
                 posPj[0] = posPj[0] - 1;
                 div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeTop');
@@ -461,14 +530,41 @@ function moverJugador(cursor) {
         estadoMuros = JSON.parse(JSON.stringify(copiaEstadoMuros));
         momias = [];
         mapa = JSON.parse(JSON.stringify(copiaMapa));
-        llaveEncontrada = false;
-        urnaEncontrada = false;
-        divMap.innerHTML = "";
+
+        // Cambiamos la imagen que nos indica el estado de los objetos encontrados a "no encontrados", la cantidad de momias y el nivel
+        let checkUrna = document.getElementsByClassName('urnaEncontradaTrue')[0];
+        checkUrna.classList.remove('urnaEncontradaTrue');
+        checkUrna.classList.add('urnaEncontrada');
+
+        let checkLlave = document.getElementsByClassName('llaveEncontradaTrue')[0];
+        checkLlave.classList.remove('llaveEncontradaTrue');
+        checkLlave.classList.add('llaveEncontrada');
+
+        if (pergaminoActivo) {
+            let checkPergamino = document.getElementsByClassName('pergaminoEncontradoTrue')[0];
+            checkPergamino.classList.remove('pergaminoEncontradoTrue');
+            checkPergamino.classList.add('pergaminoEncontrado');
+        }
+
         cantidadMomias++;
+        let enemigos = document.getElementsByClassName('cantidadEnemigos')[0];
+        enemigos.innerHTML = "x" + cantidadMomias;
+        momiasPuestas = 0;
+
         level++;
         let nivel = document.getElementsByClassName('level')[0];
         nivel.innerHTML = "Nivel " + level;
-        momiasPuestas = 0;
+
+        // Cambiamos el estado de los objetos a false para el siguiente nivel
+        pergaminoActivo = false;
+        llaveEncontrada = false;
+        urnaEncontrada = false;
+        momiasSePuedenMover = false;
+
+        // Borrramos el mapa en el HTML
+        divMap.innerHTML = "";
+
+        // Creamos el mapa de nuevo
         crearMapa(mapa);
     }
     // Si ya hemos pasado por ahí eliminamos la clase que oculta a nuestro personaje

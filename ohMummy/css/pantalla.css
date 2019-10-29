@@ -225,6 +225,12 @@ body {
     background-color: black;
 }
 
+.caminoPisado {
+    content: url("../img/ball.png");
+    height: 100%;
+    width: 100%;
+}
+
 .personajeTop {
     content: url("../img/pj.gif");
     transform: rotate(-90deg);
@@ -290,12 +296,6 @@ body {
     content: url('../img/vida.png');
     height: 30px;
     width: 30px;
-}
-
-.caminoPisado {
-    content: url("../img/ball.png");
-    height: 100%;
-    width: 100%;
 }
 
 .mapa div {
