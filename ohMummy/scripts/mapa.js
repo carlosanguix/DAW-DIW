@@ -65,7 +65,7 @@ for (let i = 0; i < vidas; i++) {
     5 - Muro revelado*/
 function crearMapa(mapa) {
     // Barajamos el Array para aleatorizar lo que habrá dentro de los pilares
-    // aleatorizarContenidoMuros();
+    aleatorizarContenidoMuros();
 
     // Creamos la fila superior
     for (let i = 0; i < 21; i++) {
