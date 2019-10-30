@@ -13,6 +13,24 @@ body {
     background-color: rgb(64, 64, 172);
 }
 
+.partidaPerdida {
+    display: none;
+}
+
+.gameOver {
+    position: absolute;
+    top: 33%;
+    bottom: 33%;
+    left: 15%;
+    right: 15%;
+    object-fit: cover;
+    border: 1px solid red;
+    background-color: salmon;
+    text-align: center;
+    line-height: 80px;
+    z-index: 999;
+}
+
 .leyenda {
     display: grid;
     grid-area: leyenda;

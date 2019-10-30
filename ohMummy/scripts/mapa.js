@@ -8,6 +8,7 @@ for (let i = 0; i < 14; i++) {
 var copiaMapa;
 // Array de posicion Y e X del personaje [Y][X] 
 var posPj = new Array();
+var pjSePuedeMover = true;
 /* Matriz de momias con arrays para los ejes Y, X de cada momia
 Ej de 3 momias {momia1 - [Y][X], momia2 - [Y][X], momia3 - [Y][x]}*/
 var cantidadMomias = 1;
@@ -280,6 +281,7 @@ function eliminarMomiaChocada() {
                 let vida = document.querySelector('.vida');
                 vida.parentNode.removeChild(vida);
             }
+            console.log(vidas);
             vidas--;
         } else {
             pergaminoActivo = false;
@@ -294,6 +296,13 @@ function eliminarMomiaChocada() {
         enemigos.innerHTML = "x" + cantidadMomias;
     }
     eliminarMomiaEnPj();
+    if (vidas == 0) {
+        pjSePuedeMover = false;
+        momiasSePuedenMover = false;
+        let gameOver = document.getElementsByClassName('partidaPerdida')[0];
+        gameOver.classList.remove('partidaPerdida');
+        gameOver.classList.add('gameOver');
+    }
 }
 
 // Función con la que eliminamos la momia que ha chocado con el personaje
@@ -483,90 +492,93 @@ function moverJugador(cursor) {
     // Modificamos la posicion anterior del PJ para que sea camino pisado
     mapa[posPj[0]][posPj[1]] = 4;
     // Modificamos su coordenada (Y-1 Arriba, Y+1 Abajo, X+1 Derecha, X-1 Izq)
-    switch (cursor) {
-        case "ArrowUp":
-            if (posPj[0] - 1 >= 0 && mapa[posPj[0] - 1][posPj[1]] != 1) {
-                eliminarDivPj();
-                posPj[0] = posPj[0] - 1;
-                div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeTop');
-            }
-            break;
-        case "ArrowRight":
-            if (posPj[1] + 1 <= 20 && mapa[posPj[0]][posPj[1] + 1] != 1) {
-                eliminarDivPj();
-                posPj[1] = posPj[1] + 1;
-                div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeRight');
-            }
-            break;
-        case "ArrowDown":
-            if (posPj[0] + 1 <= 13 && mapa[posPj[0] + 1][posPj[1]] != 1) {
-                eliminarDivPj();
-                posPj[0] = posPj[0] + 1;
-                div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeBottom');
-            }
-            break;
-        case "ArrowLeft":
-            if (posPj[1] - 1 >= 0 && mapa[posPj[0]][posPj[1] - 1] != 1) {
-                eliminarDivPj();
-                posPj[1] = posPj[1] - 1;
-                div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeLeft');
-            }
-            break;
-    }
-
-    // Si hay algún muro por descubrir (su valor es 0) entraremos a la función
-    if (estadoMuros.includes(0)) {
-        comprobarMuros();
-    }
-
-    // Si chcocamos con una momia la eliminamos
-    eliminarMomiaChocada();
-
-    // Actualizamos la posición del personaje en el mapa
-    mapa[posPj[0]][posPj[1]] = 2;
-
-    // Ajustamos los parámetros para el siguiente nivel
-    if (mapa[0][8] == 2 && llaveEncontrada && urnaEncontrada) {
-        estadoMuros = JSON.parse(JSON.stringify(copiaEstadoMuros));
-        momias = [];
-        mapa = JSON.parse(JSON.stringify(copiaMapa));
-
-        // Cambiamos la imagen que nos indica el estado de los objetos encontrados a "no encontrados", la cantidad de momias y el nivel
-        let checkUrna = document.getElementsByClassName('urnaEncontradaTrue')[0];
-        checkUrna.classList.remove('urnaEncontradaTrue');
-        checkUrna.classList.add('urnaEncontrada');
-
-        let checkLlave = document.getElementsByClassName('llaveEncontradaTrue')[0];
-        checkLlave.classList.remove('llaveEncontradaTrue');
-        checkLlave.classList.add('llaveEncontrada');
-
-        if (pergaminoActivo) {
-            let checkPergamino = document.getElementsByClassName('pergaminoEncontradoTrue')[0];
-            checkPergamino.classList.remove('pergaminoEncontradoTrue');
-            checkPergamino.classList.add('pergaminoEncontrado');
+    if (pjSePuedeMover) {
+        switch (cursor) {
+            case "ArrowUp":
+                if (posPj[0] - 1 >= 0 && mapa[posPj[0] - 1][posPj[1]] != 1) {
+                    eliminarDivPj();
+                    posPj[0] = posPj[0] - 1;
+                    div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeTop');
+                }
+                break;
+            case "ArrowRight":
+                if (posPj[1] + 1 <= 20 && mapa[posPj[0]][posPj[1] + 1] != 1) {
+                    eliminarDivPj();
+                    posPj[1] = posPj[1] + 1;
+                    div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeRight');
+                }
+                break;
+            case "ArrowDown":
+                if (posPj[0] + 1 <= 13 && mapa[posPj[0] + 1][posPj[1]] != 1) {
+                    eliminarDivPj();
+                    posPj[0] = posPj[0] + 1;
+                    div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeBottom');
+                }
+                break;
+            case "ArrowLeft":
+                if (posPj[1] - 1 >= 0 && mapa[posPj[0]][posPj[1] - 1] != 1) {
+                    eliminarDivPj();
+                    posPj[1] = posPj[1] - 1;
+                    div.item(posPj[0] * 21 + posPj[1]).classList.add('personajeLeft');
+                }
+                break;
         }
 
-        cantidadMomias++;
-        let enemigos = document.getElementsByClassName('cantidadEnemigos')[0];
-        enemigos.innerHTML = "x" + cantidadMomias;
-        momiasPuestas = 0;
 
-        level++;
-        let nivel = document.getElementsByClassName('level')[0];
-        nivel.innerHTML = "Nivel " + level;
+        // Si hay algún muro por descubrir (su valor es 0) entraremos a la función
+        if (estadoMuros.includes(0)) {
+            comprobarMuros();
+        }
 
-        // Cambiamos el estado de los objetos a false para el siguiente nivel
-        pergaminoActivo = false;
-        llaveEncontrada = false;
-        urnaEncontrada = false;
-        momiasSePuedenMover = false;
+        // Si chcocamos con una momia la eliminamos
+        eliminarMomiaChocada();
 
-        // Borrramos el mapa en el HTML
-        divMap.innerHTML = "";
+        // Actualizamos la posición del personaje en el mapa
+        mapa[posPj[0]][posPj[1]] = 2;
 
-        // Creamos el mapa de nuevo
-        crearMapa(mapa);
+        // Ajustamos los parámetros para el siguiente nivel
+        if (mapa[0][8] == 2 && llaveEncontrada && urnaEncontrada) {
+            estadoMuros = JSON.parse(JSON.stringify(copiaEstadoMuros));
+            momias = [];
+            mapa = JSON.parse(JSON.stringify(copiaMapa));
+
+            // Cambiamos la imagen que nos indica el estado de los objetos encontrados a "no encontrados", la cantidad de momias y el nivel
+            let checkUrna = document.getElementsByClassName('urnaEncontradaTrue')[0];
+            checkUrna.classList.remove('urnaEncontradaTrue');
+            checkUrna.classList.add('urnaEncontrada');
+
+            let checkLlave = document.getElementsByClassName('llaveEncontradaTrue')[0];
+            checkLlave.classList.remove('llaveEncontradaTrue');
+            checkLlave.classList.add('llaveEncontrada');
+
+            if (pergaminoActivo) {
+                let checkPergamino = document.getElementsByClassName('pergaminoEncontradoTrue')[0];
+                checkPergamino.classList.remove('pergaminoEncontradoTrue');
+                checkPergamino.classList.add('pergaminoEncontrado');
+            }
+
+            cantidadMomias++;
+            let enemigos = document.getElementsByClassName('cantidadEnemigos')[0];
+            enemigos.innerHTML = "x" + cantidadMomias;
+            momiasPuestas = 0;
+
+            level++;
+            let nivel = document.getElementsByClassName('level')[0];
+            nivel.innerHTML = "Nivel " + level;
+
+            // Cambiamos el estado de los objetos a false para el siguiente nivel
+            pergaminoActivo = false;
+            llaveEncontrada = false;
+            urnaEncontrada = false;
+            momiasSePuedenMover = false;
+
+            // Borrramos el mapa en el HTML
+            divMap.innerHTML = "";
+
+            // Creamos el mapa de nuevo
+            crearMapa(mapa);
+        }
+        // Si ya hemos pasado por ahí eliminamos la clase que oculta a nuestro personaje
+        div.item(posPj[0] * 21 + posPj[1]).classList.remove('caminoPisado');
     }
-    // Si ya hemos pasado por ahí eliminamos la clase que oculta a nuestro personaje
-    div.item(posPj[0] * 21 + posPj[1]).classList.remove('caminoPisado');
 }
