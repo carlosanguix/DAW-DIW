@@ -31,15 +31,21 @@ body {
     text-align: center;
     line-height: 30px;
     background-color: rgba(83, 83, 83, 0.788);
-    animation: 0.2s;
+    transition: all 0.5s;
+}
+
+.bordeHabilidad {
+    border: 5px solid yellow;
+    box-shadow: 0px 0px 11px 2px yellow;
 }
 
 kbd {
     font-size: 70px;
     color: white;
+    -webkit-text-stroke: 2px black;
 }
 
 p {
     font-size: 30px;
-    color: rgb(223, 255, 44);
+    color: rgb(255, 238, 0);
 }
