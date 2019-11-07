@@ -61,7 +61,6 @@ button {
 .botonMoverseTrue {
     opacity: 1;
     transform: scale(1.05);
-    transition-property: ;
     border-color: yellow;
 }
 
