@@ -1,0 +1,88 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+}
+
+.principal {
+    display: grid;
+    grid-template-areas: "leyenda sudoku";
+    grid-template-columns: 300px 1fr;
+    grid-column-gap: 20px;
+}
+
+.tablero {
+    grid-area: sudoku;
+    display: grid;
+    grid-template-columns: repeat(9, 70px);
+    grid-template-rows: repeat(9, 70px);
+    background-color: black;
+    grid-gap: 3px;
+    padding: 3px;
+    margin: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.celda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    font-weight: bold;
+}
+
+.celdaOscura {
+    background-color: rgb(177, 177, 177);
+}
+
+.celdaClara {
+    background-color: white;
+}
+
+.editable {
+    color: rgb(55, 161, 41);
+}
+
+.celdaErronea {
+    background-color: rgb(167, 64, 64);
+    color: red;
+}
+
+.leyenda {
+    font-size: large;
+    justify-content: center;
+}
+
+.botonComprobar {
+    align-self: center;
+    width: 300px;
+    height: 40px;
+}
+
+li {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.reglas {
+    margin-top: 10px;
+    background-color: rgb(205, 243, 245);
+    text-align: center;
+    list-style: none;
+    padding-inline-start: 0px;
+}
+
+.finPartida {
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    z-index: 0;
+    position: absolute;
+    width: 80%;
+    height: 50%;
+    background-color: cornflowerblue;
+    opacity: 0.8;
+}

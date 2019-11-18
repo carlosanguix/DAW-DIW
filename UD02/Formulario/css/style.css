@@ -1,0 +1,30 @@
+.fila {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 40px;
+}
+
+span {
+    display: block;
+}
+
+.nuevoCampo {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    position: absolute;
+    top: 90%;
+    left: 90%;
+}
+
+.eliminar {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+}
+
+.editar {
+    width: 30px;
+    height: 30px;
+    background-color: green;
+}

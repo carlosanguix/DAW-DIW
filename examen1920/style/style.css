@@ -1,0 +1,252 @@
+body {
+    background-image: url('../img/fondo.gif');
+    background-size: 100%;
+}
+
+@font-face {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@font-face {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#contenedor {
+    width: 1000px;
+    margin-left: calc(50% - 500px);
+}
+
+h1 {
+    color: red;
+    font-size: 50px;
+    font-family: christmas;
+    text-shadow: 2px 2px 5px #000000;
+}
+
+#cartel {
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    float: left;
+}
+
+#teclado {
+    position: absolute;
+    top: 300px;
+    left: 100px;
+    width: 270px;
+    height: 330px;
+}
+
+.tecla {
+    border: 1px solid gray;
+    font-family: christmas;
+    float: left;
+    width: 50px;
+    height: 50px;
+    background-color: whitesmoke;
+    text-align: center;
+    font-size: 20px;
+    margin: 2px;
+    color: red;
+    box-shadow: 2px 2px 3px black;
+    transition: background .5s;
+}
+
+.tecla:hover {
+    background-color: rgb(253, 177, 177);
+    cursor: pointer;
+    transition: background .5s;
+}
+
+.caja {
+    border: 3px solid black;
+    border-radius: 15px;
+    float: left;
+}
+
+#monigote {
+    position: relative;
+    background-color: silver;
+    background-image: url('../img/horca.png');
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    height: 700px;
+    width: calc(70% - 10px);
+}
+
+#letras {
+    float: left;
+    width: calc(30% - 43px);
+    margin-left: 10px;
+    height: 610px;
+}
+
+#titulo {
+    font-family: verdana;
+    font-weight: bold;
+    padding: 15px;
+    margin-top: 10px;
+    background-color: whitesmoke;
+    height: 200px;
+    width: calc(100% - 30px);
+}
+
+#score {
+    font-family: verdana;
+    font-weight: bold;
+    padding: 15px;
+    width: 100%;
+    height: 100px;
+    background-color: whitesmoke;
+    margin-bottom: 10px;
+}
+
+#score div {
+    font-family: score;
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+}
+
+#letra {
+    font-family: verdana;
+    font-weight: bold;
+    padding: 15px;
+    width: 100%;
+    height: 120px;
+    background-color: whitesmoke;
+    margin-bottom: 10px;
+}
+
+#letrasUsadas {
+    font-family: verdana;
+    font-weight: bold;
+    padding: 15px;
+    width: 100%;
+    height: calc(100% - 252px);
+    background-color: whitesmoke;
+}
+
+.extremidad {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+#cabeza {
+    top: 150px;
+    left: 400px;
+    width: 140px;
+    height: 135px;
+    background-image: url('../img/cabeza.png');
+}
+
+#cuerpo {
+    top: 213px;
+    left: 363px;
+    width: 180px;
+    height: 200px;
+    background-image: url('../img/cuerpo.png');
+    z-index: 2;
+}
+
+#brazoIzq {
+    top: 220px;
+    left: 307px;
+    width: 100px;
+    height: 140px;
+    background-image: url('../img/brazoIzq.png');
+}
+
+#brazoDer {
+    top: 218px;
+    left: 503px;
+    width: 100px;
+    height: 140px;
+    background-image: url('../img/brazoDer.png');
+}
+
+#manoIzq {
+    top: 298px;
+    left: 290px;
+    width: 80px;
+    height: 135px;
+    background-image: url('../img/manoIzq.png');
+}
+
+#manoDer {
+    top: 305px;
+    left: 540px;
+    width: 80px;
+    height: 135px;
+    background-image: url('../img/manoDer.png');
+}
+
+#piernaIzq {
+    top: 375px;
+    left: 380px;
+    width: 80px;
+    height: 135px;
+    background-image: url('../img/piernaIzq.png');
+    z-index: 1;
+}
+
+#piernaDer {
+    top: 370px;
+    left: 455px;
+    width: 80px;
+    height: 135px;
+    background-image: url('../img/piernaDer.png');
+    z-index: 1;
+}
+
+#pieIzq {
+    top: 450px;
+    left: 330px;
+    width: 120px;
+    height: 135px;
+    background-image: url('../img/pieIzq.png');
+    z-index: 2;
+}
+
+#pieDer {
+    top: 448px;
+    left: 470px;
+    width: 120px;
+    height: 135px;
+    background-image: url('../img/pieDer.png');
+    z-index: 2;
+}
+
+.letra {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    border-bottom: 2px solid black;
+}
+
+.espacio {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    border-bottom: none;
+}
+
+.cajita {}
+
+.ultLetr {
+    font-size: 30px;
+    display: block;
+    width: 60px;
+    height: 60px;
+}
+
+.letrUsa {
+    font-size: 30px;
+    display: inline;
+    width: 60px;
+    height: 60px;
+}
