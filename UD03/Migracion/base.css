@@ -1,0 +1,177 @@
+/*
+CSS Base for the Miskatonic Herald
+*/
+
+@font-face {
+    font-family: neon;
+    src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+}
+
+
+/*
+* CSS for body
+*/
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /*background-color:#323232;*/
+    background-image: url("https://picsum.photos/1600/900");
+    font-family: 'OuroborosRegular';
+    font-weight: normal;
+    font-style: normal;
+    margin: 0;
+    color: #ffffff;
+}
+
+
+/*
+* CSS for items
+*/
+
+items {
+    display: grid;
+    grid-template-rows: 3;
+    margin: 100px;
+    background-color: rgba(43, 5, 48, 0.74);
+    padding: 20px;
+    border-radius: 60px 60px 60px 60px;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+
+/*
+* CSS for body
+*/
+
+button {
+    font-size: larger;
+    height: 80px;
+    width: 400px;
+    margin-bottom: 30px;
+    border-radius: 40px 40px 40px 40px;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+button:hover {
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+button:active {
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+
+/*
+* CSS for steps
+* - Includes the opacity for the 
+*   animation that makes this more
+*   dinamyc, but is only a simple
+*   GUI.
+*/
+
+steps {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 30px;
+    justify-content: center;
+    align-items: center;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+
+/*
+* CSS for all the steps
+* with class (estabaEscondido)
+* that turns the element visible
+* with a transition.
+*/
+
+steps * {
+    transition-duration: 1s;
+    transition-property: opacity;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+.estabaEscondido {
+    opacity: 1;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+
+/*Progress*/
+
+
+/*
+* CSS for ProgressBars
+*/
+
+progress {
+    justify-self: center;
+    padding: 10px;
+    opacity: 0;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+span {
+    width: 100%;
+    height: 100%;
+}
+
+steplabel {
+    margin-left: 50px;
+    opacity: 0;
+}
+
+finalmsg {
+    opacity: 0;
+    justify-self: center;
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
+
+@keyframes neon {
+    /* 
+     * Fragmentos perdidos 
+     * ^(;,;)^
+     */
+}
