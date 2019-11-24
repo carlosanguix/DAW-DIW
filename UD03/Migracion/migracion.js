@@ -14,44 +14,40 @@ FUNCIONES PERDIDAS
 
 */
 
-function migrar(e) {
+async function migrar(e) {
 
+    let elemento = e;
+    let nombre = elemento.tagName;
 
-    let paso = parseInt(e.target.dataset.step) + 1;
-    let elemento = document.querySelector(`[data-step="${paso}"]`);
+    elemento.classList.add('estabaEscondido');
+    await new Promise(resolve => elemento.addEventListener('transitionend', resolve))
 
-    let nombre = elemento.localName;
-
-    if (nombre == "progress") {
-        console.log(elemento);
+    if (nombre == "PROGRESS") {
 
         for (let i = 0; i < 100; i++) {
 
-            setTimeout(function() {
-                elemento.value = elemento.value + 1;
-
-            }, 10000);
+            elemento.value = elemento.value + 1;
+            await sleep(10);
 
         }
     }
 
-    elemento.addEventListener('transitionend', migrar);
-
-    elemento.classList.add('estabaEscondido');
-
+    if (parseInt(e.dataset.step) != 17) {
+        let paso = parseInt(e.dataset.step) + 1;
+        elemento = document.querySelector(`[data-step="${paso}"]`);
+        migrar(elemento);
+    }
 }
 
-
-
-
+function sleep(ms) {
+    console.log("sleep")
+    return new Promise((resolve, reject) => setTimeout(resolve, ms))
+}
 
 function startMigration() {
 
     let step1 = document.querySelector(`[data-step="1"]`);
-
-    step1.addEventListener('transitionend', migrar);
-
-    step1.classList.add('estabaEscondido');
+    migrar(step1);
 }
 
 function init() {

@@ -144,6 +144,7 @@ progress {
     justify-self: center;
     padding: 10px;
     opacity: 0;
+    width: 300px;
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
