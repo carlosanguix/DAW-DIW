@@ -5,41 +5,131 @@
     --light-orange: #F29F05;
     --orange: #f28705;
     --dark-orange: #D96704;
+    --brown: #935732;
 }
 
 body {
+    height: 100%;
     margin: 0;
 }
 
 header {
     display: flex;
-    height: 200px;
+    height: 110px;
     width: 1fr;
-    background-color: var(--orange);
+    background-color: var(--brown);
 }
 
 #title {
     display: block;
     align-self: center;
-    margin-left: 60px;
+    margin-left: 170px;
     color: var(--light-yellow);
     font-family: Monoton;
-    font-size: 70px;
+    font-size: 50px;
     font-style: normal;
     font-variant: normal;
     font-weight: 700;
     line-height: 26.4px;
+    transform: rotate(-6deg);
 }
 
 #logo {
     align-self: center;
-    height: 150px;
-    content: url('../media/img/logo.jpg');
+    height: 120px;
+    content: url('../media/img/logo.png');
 }
 
 main {
-    height: 300px;
-    background-color: violet;
+    height: 1000px;
+}
+
+
+/********/
+
+
+/*Footer*/
+
+
+/********/
+
+#footer {
+    display: grid;
+    grid-template-areas: "contact nav social";
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    height: 250px;
+    background-color: var(--brown);
+}
+
+.h2Footer {
+    color: var(--light-yellow);
+    margin: 0;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+
+/*Contacto*/
+
+#contactFooter {
+    grid-area: contact;
+}
+
+#sendFooter {
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    background-color: white;
+}
+
+#textFooter {
+    border-radius: 3px;
+    height: 33px;
+    width: 330px;
+    border: none;
+}
+
+#butSendFooter {
+    height: 28px;
+    width: 43px;
+    margin: 2px;
+    background-color: var(--light-yellow);
+    border: 2px solid var(--brown);
+    border-radius: 3px;
+    padding: 0px;
+}
+
+
+/*Navigation*/
+
+#navFooter {
+    grid-area: nav;
+}
+
+#navFooter ul {
+    list-style: none;
+    padding-inline-start: 0px;
+}
+
+a {
+    color: var(--yellow);
+    text-decoration: none;
+    font-size: larger;
+}
+
+
+/*Social*/
+
+#socialFooter {
+    justify-content: center;
+    grid-area: social;
+}
+
+#networks img {
+    height: 30px;
+    margin: 0px 20px 0px 0px;
 }
 
 
@@ -104,7 +194,7 @@ main {
     display: block;
     position: absolute;
     color: transparent;
-    background-color: white;
+    background-color: rgb(202, 202, 202);
     right: 1px;
     z-index: 999;
     list-style: none;
@@ -114,6 +204,7 @@ main {
 #navigation li {
     margin-top: 10px;
     margin-bottom: 7px;
+    border-bottom: 1px solid grey;
 }
 
 .showNav {
