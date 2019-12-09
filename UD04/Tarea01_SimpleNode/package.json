@@ -1,0 +1,18 @@
+{
+  "name": "miniserver",
+  "version": "1.0.0",
+  "description": "Es un pequeño servidor de paginas web en NodeJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "Angel Berlanas Vicente",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
