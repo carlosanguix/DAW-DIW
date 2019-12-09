@@ -1,6 +1,5 @@
 // Importando librerias
 const express = require('express');
-const fetch = require("node-fetch");
 const path = require('path');
 
 // Inicializamos la app
@@ -12,5 +11,5 @@ app.use(express.static(path.join(__dirname,'sirviendo')));
 
 
 app.listen(3000,()=>{
-    console.log(" * Miniserver is Running at 4242");
+    console.log(" * Miniserver is Running at 3000");
 });
