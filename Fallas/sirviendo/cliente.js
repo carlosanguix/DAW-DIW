@@ -48,22 +48,22 @@ function listar() {
 	}
 }
 
-function refrescarFallas() {
+function aplicarFiltros() {
 
 	let select = document.getElementById('seccion');
-	
+
 	let seccion = select.options[select.selectedIndex].value;
 
 	let anyoDesde = document.getElementById('anyoDesde').value;
 	if (anyoDesde == "") {
 		anyoDesde = 0;
 	}
-	
+
 	let anyoHasta = document.getElementById('anyoHasta').value;
 	if (anyoHasta == "") {
 		anyoHasta = 9999;
 	}
-	
+
 	let tamanyo = "none";
 	if (document.getElementById('principal').checked) {
 		tamanyo = document.getElementById('principal').value;
@@ -71,23 +71,45 @@ function refrescarFallas() {
 		tamanyo = document.getElementById('infantil').value;
 	}
 
-	mostrarFallasFiltradas(seccion, anyoDesde, anyoHasta, tamanyo);
+	filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo);
 }
 
-function mostrarFallasFiltradas(seccion, anyoDesde, anyoHasta, tamanyo) {
-
-	console.log(seccion);
-	console.log(anyoDesde);
-	console.log(anyoHasta);
-	console.log(tamanyo);
+function filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo) {
 
 	let fallasFiltradas = fallasJSON.filter(falla => {
 		return (seccion == "Todas" || falla.properties.seccion == seccion)
-		&& anyoDesde <= falla.properties.anyo_fundacion
-		&& anyoHasta >= falla.properties.anyo_fundacion;
+			&& anyoDesde <= falla.properties.anyo_fundacion
+			&& anyoHasta >= falla.properties.anyo_fundacion;
 	});
 
-	console.log(fallasFiltradas);
+	pintarFallasFiltradas(fallasFiltradas, tamanyo);
+}
+
+function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
+
+	console.log(fallasFiltradas)
+	document.getElementById('fallas').innerHTML = "";
+
+	fallasFiltradas.forEach(falla => {
+
+		let divFalla = document.createElement('div');
+		divFalla.classList.add('divFalla');
+		let boceto = document.createElement('img');
+
+		let src;
+		if (tamanyo == "Principal") {
+			src = falla.properties.boceto;
+			boceto.src = src;
+			// console.log(falla.properties.boceto);
+		} else {
+			src = falla.properties.boceto_i;
+			boceto.src = src;
+			// console.log(falla.properties.boceto_i);
+		}
+
+		divFalla.appendChild(boceto);
+		document.getElementById('fallas').appendChild(divFalla);
+	});
 
 }
 
@@ -99,11 +121,11 @@ function init() {
 
 	// Añadimos los eventos
 	// refrescarFallas(seccion, añoDesde, añoHasta)
-	document.getElementById('seccion').addEventListener('change', refrescarFallas);
-	document.getElementById('anyoDesde').addEventListener('focusout', refrescarFallas);
-	document.getElementById('anyoHasta').addEventListener('focusout', refrescarFallas);
-	document.getElementById('principal').addEventListener('click', refrescarFallas);
-	document.getElementById('infantil').addEventListener('click', refrescarFallas);
+	document.getElementById('seccion').addEventListener('change', aplicarFiltros);
+	document.getElementById('anyoDesde').addEventListener('focusout', aplicarFiltros);
+	document.getElementById('anyoHasta').addEventListener('focusout', aplicarFiltros);
+	document.getElementById('principal').addEventListener('click', aplicarFiltros);
+	document.getElementById('infantil').addEventListener('click', aplicarFiltros);
 
 }
 

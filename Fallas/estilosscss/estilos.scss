@@ -1,11 +1,28 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
+    margin: 0%;
     padding-left: 20%;
     padding-right: 20%;
     font-size: x-large;
 }
 
-#fallas {
+img {
     width: 100%;
+}
+
+#fallas {
+    align-self: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-row-gap: 30px;
+    grid-column-gap: 5px;
+    align-items: center;
+    justify-items: center;
+    background-color: white;
 }
 
 select {
@@ -18,7 +35,9 @@ select {
 }
 
 form {
+    margin: 0;
     width: 100%;
+    background-color: white;
 }
 
 label {
