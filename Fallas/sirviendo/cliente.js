@@ -48,10 +48,12 @@ function listar() {
 	}
 }
 
+// Aplicamos los filtros recogiéndolos del DOM
 function aplicarFiltros() {
 
 	let select = document.getElementById('seccion');
 
+	// Opción seleccionada del select -> options
 	let seccion = select.options[select.selectedIndex].value;
 
 	let anyoDesde = document.getElementById('anyoDesde').value;
@@ -94,20 +96,34 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 
 		let divFalla = document.createElement('div');
 		divFalla.classList.add('divFalla');
+		divFalla.setAttribute('idFalla', falla.properties.id);
+
 		let boceto = document.createElement('img');
+
+		let nombreFalla = document.createElement('span');
+		nombreFalla.innerText = falla.properties.nombre;
+
+		let sector = document.createElement('span');
+		sector.setAttribute('id', "sectorFalla");
+		sector.innerText = "Sector: " + falla.properties.sector;
 
 		let src;
 		if (tamanyo == "Principal") {
 			src = falla.properties.boceto;
 			boceto.src = src;
-			// console.log(falla.properties.boceto);
 		} else {
 			src = falla.properties.boceto_i;
 			boceto.src = src;
-			// console.log(falla.properties.boceto_i);
 		}
 
+		let botonUbicacion = document.createElement('button');
+		botonUbicacion.classList.add('botonUbicacion');
+		botonUbicacion.innerText = "Ubicación";
+
+		divFalla.appendChild(nombreFalla);
 		divFalla.appendChild(boceto);
+		divFalla.appendChild(sector);
+		divFalla.appendChild(botonUbicacion);
 		document.getElementById('fallas').appendChild(divFalla);
 	});
 
