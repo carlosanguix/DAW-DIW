@@ -10,12 +10,13 @@
   "keywords": [
     "server"
   ],
-  "author": "Angel Berlanas Vicente",
-  "license": "MIT",
+  "author": "Carlos Anguix Genovés",
+  "license": "Myself",
   "dependencies": {
     "body-parse": "^0.1.0",
     "express": "^4.17.1",
     "mongodb": "^3.4.0",
+    "mongoose": "^5.8.1",
     "node-sass": "^4.13.0"
   }
 }

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   scroll-behavior: smooth; }
 
@@ -7,70 +8,99 @@ body {
   padding-right: 20%;
   font-size: x-large; }
 
+.divFalla:hover {
+  transform: scale(1.05); }
+
+#seccion, .anyo {
+  display: block;
+  height: 30px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid;
+  border-radius: 2px 2px 2px 2px;
+  font-size: large; }
+
+.anyo {
+  padding-left: 5px;
+  margin-bottom: 10px; }
+
+.labelTamanyo {
+  margin-bottom: 5px;
+  display: block; }
+
+#fallas {
+  width: 100%;
+  align-self: center;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-column-gap: 15px;
+  grid-row-gap: 30px;
+  align-items: center;
+  justify-items: center; }
+
 .divFalla {
+  height: 100%;
   background-color: linen;
   text-align: center;
-  display: grid;
-  grid-template-rows: 75px auto 60px 40px;
-  height: 100%;
   border: 2px solid black;
   border-radius: 10px 10px 10px 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75); }
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  display: grid;
+  grid-template-rows: 75px 415px 60px 40px 40px;
+  align-items: center;
+  justify-items: center;
+  transition: 0.2s; }
+  .divFalla p, .divFalla span {
+    font-weight: bold;
+    margin-bottom: 5px; }
   .divFalla img {
     width: 100%;
     max-height: 415px;
     align-self: center; }
+  .divFalla .botonUbicacion {
+    width: 100%;
+    cursor: pointer;
+    outline: 0;
+    border-radius: 0px 0px 5px 5px;
+    border: 0;
+    border-top: 2px solid black;
+    background-color: transparent;
+    font-size: larger; }
+  .divFalla .botonUbicacion:hover {
+    box-shadow: inset 0px 0px 81px -36px #e6b800; }
 
-#fallas {
-  margin-top: 30px;
-  align-self: center;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-row-gap: 30px;
-  grid-column-gap: 15px;
-  align-items: center;
-  justify-items: center; }
+.rate {
+  float: left;
+  height: 46px;
+  padding: 0 10px; }
 
-select {
-  height: 30px;
-  width: 100%;
-  border: 1px solid;
-  border-radius: 2px 2px 2px 2px;
-  background-color: white;
-  font-size: large; }
+.rate:not(:checked) > input {
+  position: absolute;
+  top: -9999px; }
 
-form {
-  margin: 0;
-  width: 100%;
-  background-color: white; }
-
-label {
-  margin-bottom: 5px;
-  display: block; }
-
-.anyo {
-  padding-left: 5px;
-  border: 1px solid;
-  border-radius: 2px 2px 2px 2px;
-  display: block;
-  width: 100%;
-  height: 30px;
-  font-size: large;
-  margin-bottom: 10px; }
-
-.botonUbicacion {
+.rate:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
   cursor: pointer;
-  outline: 0;
-  border-radius: 0px 0px 5px 5px;
-  border: 0;
-  border-top: 2px solid black;
-  background-color: transparent;
-  font-size: larger; }
+  font-size: 30px;
+  color: #ccc; }
 
-.botonUbicacion:hover {
-  box-shadow: inset 0px 0px 81px -36px #e6b800; }
+.rate:not(:checked) > label:before {
+  content: '★ '; }
 
-p, span {
-  font-weight: bold;
-  margin-bottom: 5px; }
+.rate > input:checked ~ label {
+  color: #ffc700; }
+
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217; }
+
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08; }

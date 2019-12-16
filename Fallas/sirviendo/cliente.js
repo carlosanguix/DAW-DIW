@@ -116,6 +116,39 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 			boceto.src = src;
 		}
 
+		/*
+		<div class="rate">
+			<input type="radio" id="star5" name="rate" value="5" />
+			<label for="star5" title="text">5 stars</label>
+			<input type="radio" id="star4" name="rate" value="4" />
+			<label for="star4" title="text">4 stars</label>
+			<input type="radio" id="star3" name="rate" value="3" />
+			<label for="star3" title="text">3 stars</label>
+			<input type="radio" id="star2" name="rate" value="2" />
+			<label for="star2" title="text">2 stars</label>
+			<input type="radio" id="star1" name="rate" value="1" />
+			<label for="star1" title="text">1 star</label>
+		</div>
+		*/
+
+		// ESTRELLAS
+		// Creamos contenedor de estrellas
+		let stars = document.createElement('div');
+		stars.classList.add('rate');
+		for (let i = 5; i > 0; i--) {
+			let radio = document.createElement('radio');
+			radio.setAttribute('type', "radio");
+			radio.setAttribute('id', 'star' + i);
+			radio.setAttribute('name', 'rate');
+			radio.setAttribute('value', '' + i);
+			let label = document.createElement('label');
+			label.setAttribute('for', 'star' + i);
+			label.setAttribute('title', 'text');
+			label.innerText = '' + i;
+			stars.appendChild(radio);
+			stars.appendChild(label);
+		}
+
 		let botonUbicacion = document.createElement('button');
 		botonUbicacion.classList.add('botonUbicacion');
 		botonUbicacion.innerText = "Ubicación";
@@ -123,6 +156,10 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		divFalla.appendChild(nombreFalla);
 		divFalla.appendChild(boceto);
 		divFalla.appendChild(sector);
+
+		// ESTRELLAS
+		divFalla.appendChild(stars);
+
 		divFalla.appendChild(botonUbicacion);
 		document.getElementById('fallas').appendChild(divFalla);
 	});
@@ -142,7 +179,6 @@ function init() {
 	document.getElementById('anyoHasta').addEventListener('focusout', aplicarFiltros);
 	document.getElementById('principal').addEventListener('click', aplicarFiltros);
 	document.getElementById('infantil').addEventListener('click', aplicarFiltros);
-
 }
 
 window.onload = init;

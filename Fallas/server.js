@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({
 
 // MONGO Parseamos lo jsons
 app.use(bodyParser.json());
+
+// MONGO Otra cosa.....
 mongoose.Promise = global.Promise;
 
 // MONGO Conexión

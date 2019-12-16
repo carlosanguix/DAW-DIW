@@ -1,18 +1,19 @@
 module.exports = (app) => {
+    
     const puntuaciones = require('../controllers/puntuacion.controller.js');
 
-    // Create a new puntuaciones
+    // Crear una nueva puntuacion
     app.post('/puntuaciones', puntuaciones.create);
 
-    // Retrieve all puntuaciones
+    // Obtener todas las puntuaciones
     app.get('/puntuaciones', puntuaciones.findAll);
 
-    // Retrieve a single puntuaciones with puntuacionId
+    // Obtener una sola puntuación por su ID
     //app.get('/puntuaciones/:puntuacionId', puntuaciones.findOne);
 
-    // Update a puntuaciones with puntuacionId
+    // Modificar una puntuación por su ID
     //app.put('/puntuaciones/:puntuacionId', puntuaciones.update);
 
-    // Delete a puntuaciones with puntuacionId
+    // Eliminar una puntuación por su ID
     //app.delete('/puntuaciones/:puntuacionId', puntuaciones.delete);
 }
