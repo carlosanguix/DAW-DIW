@@ -1,126 +1,135 @@
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    margin: 0%;
-    padding-left: 20%;
-    padding-right: 20%;
-    font-size: x-large;
+  margin: 0%;
+  padding-left: 20%;
+  padding-right: 20%;
+  font-size: x-large;
 }
 
 .divFalla:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
-#seccion, .anyo {
-    display: block;
-    height: 30px;
-    width: 100%;
-    background-color: white;
-    border: 1px solid;
-    border-radius: 2px 2px 2px 2px;
-    font-size: large;
+#seccion,
+.anyo {
+  display: block;
+  height: 30px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid;
+  border-radius: 2px 2px 2px 2px;
+  font-size: large;
 }
 
 .anyo {
-    padding-left: 5px;
-    margin-bottom: 10px;
+  padding-left: 5px;
+  margin-bottom: 10px;
 }
 
 .labelTamanyo {
-    margin-bottom: 5px;
-    display: block;
+  margin-bottom: 5px;
+  display: block;
 }
 
 #fallas {
-    width: 100%;
-    align-self: center;
-    margin-top: 30px;
+  width: 100%;
+  align-self: center;
+  margin: 30px 0px 30px 0px;
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-column-gap: 15px;
-    grid-row-gap: 30px;
-    align-items: center;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-column-gap: 15px;
+  grid-row-gap: 30px;
+  align-items: center;
+  justify-items: center;
 }
 
 .divFalla {
-    height: 100%;
-    background-color: linen;
-    text-align: center;
-    border: 2px solid black;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    
-    display: grid;
-    grid-template-rows: 75px 415px 60px 40px 40px;
-    align-items: center;
-    justify-items: center;
+  height: 100%;
+  width: 320px;
+  background-color: linen;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 
-    transition: 0.2s;
+  display: grid;
+  grid-template-rows: 75px 415px 60px 50px 35px;
+  align-items: center;
+  justify-items: center;
 
-    p, span {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
+  transition: 0.2s;
 
-    img {
-        width: 100%;
-        max-height: 415px;
-        align-self: center;
-    }
+  p,
+  span {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
 
-    .botonUbicacion {
-        width: 100%;
-        cursor: pointer;
-        outline: 0;
-        border-radius: 0px 0px 5px 5px;
-        border: 0;
-        border-top: 2px solid black;
-        background-color: transparent;
-        font-size: larger;
-    }
+  img {
+    width: 100%;
+    max-height: 415px;
+    align-self: center;
+  }
 
-    .botonUbicacion:hover {
-        box-shadow: inset 0px 0px 81px -36px rgba(230,184,0,1);
-    }
+  .botonUbicacion {
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    outline: 0;
+    border-radius: 0px 0px 5px 5px;
+    border: 0;
+    border-top: 2px solid black;
+    background-color: transparent;
+    font-size: larger;
+  }
+
+  .botonUbicacion:hover {
+    box-shadow: inset 0px 30px 81px -36px rgba(230, 184, 0, 1);
+  }
 }
 
 // ESTRELLAS
-.rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
+.puntuacion {
+  /*La propiedad direction: rtl; cambia la dirección de escritura  de 
+      derecha a izquierda ( right to left )*/
+  direction: rtl;
+  /* right to left */
+  /*Se utiliza junto con la propiedad direction para cambiar  la dirección 
+      del texto */
+  unicode-bidi: bidi-override;
+  /* bidi de bidireccional*/
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-.rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
+
+.radioEstrellas {
+  display: none;
 }
-.rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
+
+.radioEstrellas:checked ~ label {
+  color: orange;
 }
-.rate:not(:checked) > label:before {
-    content: '★ ';
+
+.labelEstrellas {
+  cursor: pointer;
+  color: grey;
+  font-size: 1.75em;
+  
 }
-.rate > input:checked ~ label {
-    color: #ffc700;    
+
+.labelEstrellas:hover {
+  color: orange;
 }
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
+
+.labelEstrellas:hover ~ label {
+  color: orange;
 }
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
+
+.rating {
+  border: none;
 }

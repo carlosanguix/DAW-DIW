@@ -2,7 +2,6 @@ const Puntuacion = require('../models/puntuacion.model.js');
 
 // Obtener todas las puntuaciones
 exports.findAll = (req,res) => {
-
     Puntuacion.find().then(puntuaciones=>{
         res.send(puntuaciones);
     }).catch(err=>{
@@ -14,6 +13,8 @@ exports.findAll = (req,res) => {
 
 // Crear y salvar
 exports.create = (req,res)=>{
+
+    console.log(req.body);
 
     // Validamos el puntuacion
     if (!req.body){
