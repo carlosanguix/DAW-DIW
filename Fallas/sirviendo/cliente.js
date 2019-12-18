@@ -4,6 +4,12 @@ let fallasJSON;
 // Todas las secciones
 let todasSecciones;
 
+/*************************************/
+/* Sección de peticiones al servidor */
+/*************************************/
+// VACIO
+
+
 function listar() {
 
 	// Accedemos a la API de monumentos falleros de datos abiertos de valencia
@@ -35,9 +41,9 @@ function listar() {
 		// Lo ordenamos
 		todasSecciones.sort();
 
-		let selectSecciones = document.getElementById('seccion');
-
 		// Las añadimos al DOM
+		let selectSecciones = document.getElementById('seccion');
+		
 		for (let i = 0; i < todasSecciones.length; i++) {
 
 			let optionSeccion = document.createElement('option');
@@ -78,6 +84,9 @@ function aplicarFiltros() {
 
 function filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo) {
 
+	// De la lista de fallasFiltradas, filtrar por cada falla:
+	// - La que coincida en sección con la sección seleccionada, o en su ausencia, todas.
+	// - Los años que estén en el rango "desde" > ____ < "hasta".
 	let fallasFiltradas = fallasJSON.filter(falla => {
 		return (seccion == "Todas" || falla.properties.seccion == seccion)
 			&& anyoDesde <= falla.properties.anyo_fundacion
@@ -91,6 +100,8 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 
 	console.log(fallasFiltradas)
 	document.getElementById('fallas').innerHTML = "";
+
+	let idEstrella = 0;
 
 	fallasFiltradas.forEach(falla => {
 
@@ -117,36 +128,51 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		}
 
 		/*
-		<div class="rate">
-			<input type="radio" id="star5" name="rate" value="5" />
-			<label for="star5" title="text">5 stars</label>
-			<input type="radio" id="star4" name="rate" value="4" />
-			<label for="star4" title="text">4 stars</label>
-			<input type="radio" id="star3" name="rate" value="3" />
-			<label for="star3" title="text">3 stars</label>
-			<input type="radio" id="star2" name="rate" value="2" />
-			<label for="star2" title="text">2 stars</label>
-			<input type="radio" id="star1" name="rate" value="1" />
-			<label for="star1" title="text">1 star</label>
-		</div>
+		<fieldset class="rating">
+    		<form action="">
+      			<p class="puntuacion">
+        			<input type="radio" id="radio1" name="estrellas" value="5" />
+        			<label for="radio1">★</label>
+        			<input type="radio" id="radio2" name="estrellas" value="4" />
+        			<label for="radio2">★</label>
+        			<input type="radio" id="radio3" name="estrellas" value="3" />
+        			<label for="radio3">★</label>
+        			<input type="radio" id="radio4" name="estrellas" value="2" />
+        			<label for="radio4">★</label>
+        			<input type="radio" id="radio5" name="estrellas" value="1" />
+        			<label for="radio5">★</label>
+      			</p>
+    		</form>
+ 		</fieldset>
 		*/
 
 		// ESTRELLAS
-		// Creamos contenedor de estrellas
-		let stars = document.createElement('div');
-		stars.classList.add('rate');
-		for (let i = 5; i > 0; i--) {
-			let radio = document.createElement('radio');
+		// Creamos contenedores de estrellas
+		let field = document.createElement('fieldset');
+		field.classList.add('rating');
+
+		let starsForm = document.createElement('form');
+
+		let p = document.createElement('p');
+		p.classList.add('puntuacion');
+
+		for (let i = 5; i > 0; i-- , idEstrella++) {
+			let radio = document.createElement('input');
 			radio.setAttribute('type', "radio");
-			radio.setAttribute('id', 'star' + i);
-			radio.setAttribute('name', 'rate');
+			radio.setAttribute('id', 'radio' + idEstrella);
+			radio.setAttribute('name', 'estrellas');
 			radio.setAttribute('value', '' + i);
+			radio.classList.add('radioEstrellas');
+
 			let label = document.createElement('label');
-			label.setAttribute('for', 'star' + i);
-			label.setAttribute('title', 'text');
-			label.innerText = '' + i;
-			stars.appendChild(radio);
-			stars.appendChild(label);
+			label.setAttribute('for', 'radio' + idEstrella);
+			label.setAttribute('value', i);
+			label.innerText = '★';
+			label.addEventListener('click', enviarPuntuacion);
+			label.classList.add('labelEstrellas');
+
+			p.appendChild(radio);
+			p.appendChild(label);
 		}
 
 		let botonUbicacion = document.createElement('button');
@@ -158,11 +184,45 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		divFalla.appendChild(sector);
 
 		// ESTRELLAS
-		divFalla.appendChild(stars);
+		starsForm.appendChild(p);
+		field.appendChild(starsForm);
+		divFalla.appendChild(field);
 
 		divFalla.appendChild(botonUbicacion);
 		document.getElementById('fallas').appendChild(divFalla);
 	});
+}
+
+function enviarPuntuacion() {
+
+	let id = this.parentElement.parentElement.parentElement.parentElement.getAttribute('idFalla');
+	let puntuacion = this.getAttribute('value');
+	let ip = "127.0.0.1";
+
+	/*
+	let puntos = {
+		idFalla: id,
+		ip: ip,
+		puntuacion: puntuacion
+	};*/
+
+	// Enviar puntuación
+	let data = new FormData();
+	data.append('idFalla', id);
+	data.append('puntuacion', puntuacion);
+	data.append('ip', ip);
+
+	data.forEach(el => {
+		console.log(el);
+	});
+
+	fetch('/puntuaciones', {
+		method: 'POST',
+		body: data,
+		
+	}).then(res => res.json())
+		.catch(error => console.error('Error:', error))
+		.then(response => console.log('Success:', response));
 
 }
 
