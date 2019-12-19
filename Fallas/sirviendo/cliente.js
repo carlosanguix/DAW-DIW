@@ -43,7 +43,7 @@ function listar() {
 
 		// Las añadimos al DOM
 		let selectSecciones = document.getElementById('seccion');
-		
+
 		for (let i = 0; i < todasSecciones.length; i++) {
 
 			let optionSeccion = document.createElement('option');
@@ -54,7 +54,7 @@ function listar() {
 	}
 }
 
-// Aplicamos los filtros recogiéndolos del DOM
+// Recogemos los filtros del DOM
 function aplicarFiltros() {
 
 	let select = document.getElementById('seccion');
@@ -98,7 +98,6 @@ function filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo) {
 
 function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 
-	console.log(fallasFiltradas)
 	document.getElementById('fallas').innerHTML = "";
 
 	let idEstrella = 0;
@@ -127,35 +126,17 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 			boceto.src = src;
 		}
 
-		/*
-		<fieldset class="rating">
-    		<form action="">
-      			<p class="puntuacion">
-        			<input type="radio" id="radio1" name="estrellas" value="5" />
-        			<label for="radio1">★</label>
-        			<input type="radio" id="radio2" name="estrellas" value="4" />
-        			<label for="radio2">★</label>
-        			<input type="radio" id="radio3" name="estrellas" value="3" />
-        			<label for="radio3">★</label>
-        			<input type="radio" id="radio4" name="estrellas" value="2" />
-        			<label for="radio4">★</label>
-        			<input type="radio" id="radio5" name="estrellas" value="1" />
-        			<label for="radio5">★</label>
-      			</p>
-    		</form>
- 		</fieldset>
-		*/
-
 		// ESTRELLAS
 		// Creamos contenedores de estrellas
-		let field = document.createElement('fieldset');
-		field.classList.add('rating');
+		let starsfield = document.createElement('fieldset');
+		starsfield.classList.add('rating');
 
 		let starsForm = document.createElement('form');
 
-		let p = document.createElement('p');
-		p.classList.add('puntuacion');
+		let starsP = document.createElement('p');
+		starsP.classList.add('puntuacion');
 
+		// Creamos dichas estrellas (radioButton, label)
 		for (let i = 5; i > 0; i-- , idEstrella++) {
 			let radio = document.createElement('input');
 			radio.setAttribute('type', "radio");
@@ -171,8 +152,8 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 			label.addEventListener('click', enviarPuntuacion);
 			label.classList.add('labelEstrellas');
 
-			p.appendChild(radio);
-			p.appendChild(label);
+			starsP.appendChild(radio);
+			starsP.appendChild(label);
 		}
 
 		let botonUbicacion = document.createElement('button');
@@ -184,46 +165,37 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		divFalla.appendChild(sector);
 
 		// ESTRELLAS
-		starsForm.appendChild(p);
-		field.appendChild(starsForm);
-		divFalla.appendChild(field);
+		starsForm.appendChild(starsP);
+		starsfield.appendChild(starsForm);
+		divFalla.appendChild(starsfield);
 
 		divFalla.appendChild(botonUbicacion);
 		document.getElementById('fallas').appendChild(divFalla);
 	});
 }
 
+// Enviamos la puntuación al servidor para validarla
 function enviarPuntuacion() {
 
 	let id = this.parentElement.parentElement.parentElement.parentElement.getAttribute('idFalla');
 	let puntuacion = this.getAttribute('value');
 	let ip = "127.0.0.1";
 
-	/*
-	let puntos = {
+	let data = {
 		idFalla: id,
 		ip: ip,
 		puntuacion: puntuacion
-	};*/
-
-	// Enviar puntuación
-	let data = new FormData();
-	data.append('idFalla', id);
-	data.append('puntuacion', puntuacion);
-	data.append('ip', ip);
-
-	data.forEach(el => {
-		console.log(el);
-	});
+	};
 
 	fetch('/puntuaciones', {
 		method: 'POST',
-		body: data,
-		
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json'
+		}
 	}).then(res => res.json())
 		.catch(error => console.error('Error:', error))
 		.then(response => console.log('Success:', response));
-
 }
 
 function init() {
