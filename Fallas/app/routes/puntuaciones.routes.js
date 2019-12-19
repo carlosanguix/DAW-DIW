@@ -11,6 +11,9 @@ module.exports = (app) => {
     // Obtener una sola puntuación por su ID
     //app.get('/puntuaciones/:puntuacionId', puntuaciones.findOne);
 
+    // Obtener una puntuación a partir de dos campos (diFalla, IP)
+    app.get('/puntuaciones/comprueba/:idFalla/:ip',puntuaciones.existe);
+    
     // Modificar una puntuación por su ID
     //app.put('/puntuaciones/:puntuacionId', puntuaciones.update);
 
