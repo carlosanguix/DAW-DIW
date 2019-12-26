@@ -15,7 +15,7 @@ module.exports = (app) => {
     app.get('/puntuaciones/comprueba/:idFalla/:ip',puntuaciones.existe);
     
     // Modificar una puntuación por su ID
-    //app.put('/puntuaciones/:puntuacionId', puntuaciones.update);
+    app.put('/puntuaciones/:puntuacionId', puntuaciones.update);
 
     // Eliminar una puntuación por su ID
     //app.delete('/puntuaciones/:puntuacionId', puntuaciones.delete);
