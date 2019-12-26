@@ -175,27 +175,89 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 }
 
 // Enviamos la puntuación al servidor para validarla
-function enviarPuntuacion() {
+async function enviarPuntuacion() {
 
+	// Nos quedamos con los parámetros de la nueva puntuación introducida
 	let id = this.parentElement.parentElement.parentElement.parentElement.getAttribute('idFalla');
 	let puntuacion = this.getAttribute('value');
 	let ip = "127.0.0.1";
 
+	// Creamos el objeto con esos parámetros
 	let data = {
 		idFalla: id,
 		ip: ip,
 		puntuacion: puntuacion
 	};
 
-	fetch('/puntuaciones', {
-		method: 'POST',
-		body: JSON.stringify(data),
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).then(res => res.json())
-		.catch(error => console.error('Error:', error))
-		.then(response => console.log('Success:', response));
+	// Comprobamos si ya existe la puntuacion
+	let existe = await buscarCoincidencia(id, ip);
+
+	if (existe) { // Si existe la modificamos
+
+		// Obtenemos el id de la puntuación que coincide con nuestra ip y el id de la falla,
+		// Nos devuelve una lista de objetos json, ya que en controllers hacemos un .find()
+		// (Si hiciéramos un .findOne() nos devolvería un objeto con la primera coincidencia)
+		let idPuntuacion = await buscarIdPuntuacion(id, ip);
+
+		// Realizamos una petición al servidor con el id de la puntuación encontrada
+		// pasándole por el body la nueva puntuación
+		fetch('/puntuaciones/' + idPuntuacion[0]._id, {
+			method: 'PUT',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json())
+			.catch(error => console.error('Error:', error))
+			.then(response => console.log('Success:', response));
+
+	} else { // Si no existe introducimos la nueva puntuación
+
+		// Realizamos una petición al servidor pasándole en el body la nueva puntuacion
+		fetch('/puntuaciones', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json())
+			.catch(error => console.error('Error:', error))
+			.then(response => console.log('Success:', response));
+	}
+}
+
+// Hacemos una consulta buscando la puntuación introducida
+function buscarIdPuntuacion(id, ip) {
+
+	return fetch('/puntuaciones/comprueba/' + id + '/' + ip)
+		.then(res => res.json())
+		.then(json => {
+			// Si se encuentra una coincidencia, devolvemos el objeto
+			return json;
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			return false
+		})
+}
+
+// Hacemos una consulta para comprobar si existe la puntuación
+function buscarCoincidencia(id, ip) {
+
+	return fetch('/puntuaciones/comprueba/' + id + '/' + ip)
+		.then(res => res.json())
+		.then(json => {
+			// Devolvemos true o false si se ha encontrado alguna coincidencia
+			if (json.length != 0) {
+				return true;
+			} else {
+				return false;
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			return false
+		})
 }
 
 function init() {
