@@ -1,3 +1,9 @@
+/*
+Comandos útiles mongo
+    - db.puntuacions.find()
+    - db.puntuacions.remove({'ip':'127.0.0.1'})
+*/
+
 const Puntuacion = require('../models/puntuacion.model.js');
 
 // Obtener todas las puntuaciones (no la utilizaremos)
@@ -12,17 +18,13 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Obtener una puntuación a partir de dos campos (diFalla, IP)
+// Obtener una puntuación a partir de dos campos (idFalla, IP)
 exports.existe = (req, res) => {
-
-    console.info(req.params.idFalla);
-    console.info(req.params.ip);
-
     // Buscamos dicha puntuación
     Puntuacion.find({ "idFalla": req.params.idFalla, "ip": req.params.ip })
         .then(puntuacion => {
             // Devolvemos o la puntuación encontrada o un booleano
-            res.send(puntuacion._id);
+            res.send(puntuacion);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Error al recuperar un dato a partir de dos campos"
@@ -30,53 +32,47 @@ exports.existe = (req, res) => {
         });
 };
 
+
 // Crear y salvar
 exports.create = (req, res) => {
 
-    console.log(req.body);
-
     // Validamos el puntuacion
     if (!req.body) {
-        console.log(req.body);
         return res.status(400).send({
             message: "La puntuación está vacía o faltan campos"
         });
     }
 
-    // Después de validar la puntuación debemos preguntarle a la BBDD si ya existe ese campo que queremos introducir
-
-
-
-    // En caso de que no exista, lo introducimos
-    // Guardamos la puntuación recibida
-    puntuacion.save().then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Error al crear una nueva puntuación"
-        });
-    });
-
-    // En caso de que si exista...
-    // ...Buscar esa coincidencia y modificarla en base a la id de la puntuación
-
-
-
-    // En cualquiera de los dos casos, debemos devolver la puntuación y modificarsela al cliente (modificar las estrellas)...
-    // ... Tal vez no es necesario porque el cliente la modifica antes de validarla (está bien).
-
-
-
-    /* En principio esto no lo necesitamos ya porque la puntuación recibida o es correcta o no la introducimos.
+    // Creamos la nueva puntuación
     const puntuacion = new Puntuacion({
-        idFalla: req.body.idFalla || "idFallaVacio",
-        ip: req.body.ip || "127.0.0.1",
-        puntuacion: req.body.puntuacion || 42
-    })*/
+        idFalla: req.body.idFalla,
+        ip: req.body.ip,
+        puntuacion: req.body.puntuacion
+    })
+
+    // Guardamos la puntuación recibida
+    puntuacion.save()
+        .then(data => {
+            res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Error al crear una nueva puntuación"
+            });
+        });
 };
 
 // Modificar una puntuación en base al id de puntuación
 exports.update = (req, res) => {
 
+    // (id, puntuacion)
+    let idPuntuacion = { _id: req.params.puntuacionId };
+    let nuevaPuntuacion = { puntuacion: req.body.puntuacion };
 
+    Puntuacion.updateOne(idPuntuacion, nuevaPuntuacion)
+        .then(data => res.send(data))
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Error al modificar una nueva puntuación"
+            });
+        });
 };
