@@ -4,6 +4,12 @@ let fallasJSON;
 // Todas las secciones
 let todasSecciones;
 
+// Todas las puntuaciones de nuestra IP
+let puntuacionesIpLocal;
+
+// TODAS las puntuaciones
+let todasPuntuaciones;
+
 /*************************************/
 /* Sección de peticiones al servidor */
 /*************************************/
@@ -86,7 +92,7 @@ function filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo) {
 
 	// De la lista de fallasFiltradas, filtrar por cada falla:
 	// - La que coincida en sección con la sección seleccionada, o en su ausencia, todas.
-	// - Los años que estén en el rango "desde" > ____ < "hasta".
+	// - Los años que estén en el rango "desde" > _ _ _ _ < "hasta".
 	let fallasFiltradas = fallasJSON.filter(falla => {
 		return (seccion == "Todas" || falla.properties.seccion == seccion)
 			&& anyoDesde <= falla.properties.anyo_fundacion
@@ -96,6 +102,7 @@ function filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo) {
 	pintarFallasFiltradas(fallasFiltradas, tamanyo);
 }
 
+// Creamos las cajas donde irán las fallas y las rellenamos
 function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 
 	document.getElementById('fallas').innerHTML = "";
@@ -260,11 +267,47 @@ function buscarCoincidencia(id, ip) {
 		})
 }
 
+// (Sobrecarga) Coleccionamos puntuaciones dependiendo de:
+//	- Si le pasamos una ip coleccionaremos solo las puntuaciones de esa IP
+//	- Si no le pasamos una ip coleccionaremos todas las puntuaciones
+function coleccionarPuntuaciones(ipLocal) {
+
+	let ipLocalFunc = ipLocal;
+
+	fetch('/puntuaciones')
+		.then(res => res.json())
+		.then(json => {
+			json.forEach(puntuaciones => {
+				if (ipLocalFunc == '127.0.0.1') {
+					if (puntuaciones.ip == '127.0.0.1') {
+						puntuacionesIpLocal.push(puntuaciones);
+					}
+				} else {
+					todasPuntuaciones.push(puntuaciones);
+				}
+			});
+		})
+		.catch(error => console.error('Error al consultar todas las puntuaciones desde el cliente', error))
+
+}
+
 function init() {
 
 	// Inicializamos lo necesario
 	todasSecciones = [];
+	puntuacionesIpLocal = [];
+	todasPuntuaciones = [];
 	listar();
+
+	// REcojemos todas las putuaciones para después sacar la media
+	coleccionarPuntuaciones();
+
+	// Recojemos las puntuaciones que coincidan con nuestra ip y nos las guardamos en un array
+	let ipLocal = '127.0.0.1';
+	coleccionarPuntuaciones(ipLocal);
+
+	// Los ordenamos por idFalla
+	
 
 	// Añadimos los eventos
 	// refrescarFallas(seccion, añoDesde, añoHasta)

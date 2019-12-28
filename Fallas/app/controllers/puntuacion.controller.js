@@ -36,7 +36,7 @@ exports.existe = (req, res) => {
 // Crear y salvar
 exports.create = (req, res) => {
 
-    // Validamos el puntuacion
+    // Validamos la puntuacion
     if (!req.body) {
         return res.status(400).send({
             message: "La puntuación está vacía o faltan campos"
