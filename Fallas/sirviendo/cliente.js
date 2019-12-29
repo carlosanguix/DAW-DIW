@@ -86,6 +86,47 @@ function aplicarFiltros() {
 	}
 
 	filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo);
+
+	mostrarPuntuacionFallasFiltradas();
+}
+
+function mostrarPuntuacionFallasFiltradas() {
+
+
+	let fallasDOM = document.getElementsByClassName('divFalla');
+
+	for (let i = 0; i < fallasDOM.length; i++) {
+
+		let idFallaDOM = fallasDOM[i].getAttribute('idFalla');
+
+		let mediaIdFalla = 0;
+
+		let cantPuntuaciones = 0;
+
+
+		for (let j = 0; j < todasPuntuaciones.length; j++) {
+
+			let idFallaTodasPunt = todasPuntuaciones[j].idFalla;
+
+			if (idFallaDOM == idFallaTodasPunt) {
+
+				cantPuntuaciones++;
+				mediaIdFalla += todasPuntuaciones[j].puntuacion;
+			}
+		}
+
+
+
+		mediaIdFalla /= cantPuntuaciones;
+		if (!isNaN(mediaIdFalla)) {
+			console.log('media: ' + mediaIdFalla);
+			for (let k = 9; k > 10 - mediaIdFalla * 2; k-=2) {
+				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].style.color = "#EEE831";
+			}
+		}
+
+
+	}
 }
 
 function filtrarFallas(seccion, anyoDesde, anyoHasta, tamanyo) {
@@ -306,8 +347,7 @@ function init() {
 	let ipLocal = '127.0.0.1';
 	coleccionarPuntuaciones(ipLocal);
 
-	// Los ordenamos por idFalla
-	
+
 
 	// Añadimos los eventos
 	// refrescarFallas(seccion, añoDesde, añoHasta)
