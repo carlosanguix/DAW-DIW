@@ -19,6 +19,7 @@
     "mongodb": "^3.4.0",
     "mongoose": "^5.8.1",
     "node-sass": "^4.13.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "proj4": "^2.6.0"
   }
 }

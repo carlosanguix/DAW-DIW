@@ -115,14 +115,15 @@ function mostrarPuntuacionFallasFiltradas() {
 			}
 		}
 
-
-
 		mediaIdFalla /= cantPuntuaciones;
+		
 		if (!isNaN(mediaIdFalla)) {
-			console.log('media: ' + mediaIdFalla);
-			for (let k = 9; k > 10 - mediaIdFalla * 2; k-=2) {
-				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].style.color = "#EEE831";
+			for (let k = 8; k >= 10 - mediaIdFalla * 2; k-=2) {
+				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].checked = true;
 			}
+			/*for (let k = 9; k > 10 - mediaIdFalla * 2; k-=2) {
+				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].style.color = "#EEE831";
+			}*/
 		}
 
 
@@ -207,6 +208,8 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		let botonUbicacion = document.createElement('button');
 		botonUbicacion.classList.add('botonUbicacion');
 		botonUbicacion.innerText = "Ubicación";
+		botonUbicacion.addEventListener('click', mostrarUbicacion);
+
 
 		divFalla.appendChild(nombreFalla);
 		divFalla.appendChild(boceto);
@@ -220,6 +223,20 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		divFalla.appendChild(botonUbicacion);
 		document.getElementById('fallas').appendChild(divFalla);
 	});
+}
+
+function mostrarUbicacion() {
+	
+	let idFallaUbicacion = this.parentElement.getAttribute('idFalla');
+	console.log(idFallaUbicacion);
+	console.log(fallasJSON);
+	
+	for (let i = 0; i < fallasJSON.length; i++) {
+		if (fallasJSON[i].properties.id == idFallaUbicacion) {
+			console.log(fallasJSON[i].properties.id);
+			console.log(fallasJSON[i].geometry.coordinates);
+		}
+	}
 }
 
 // Enviamos la puntuación al servidor para validarla
@@ -346,8 +363,6 @@ function init() {
 	// Recojemos las puntuaciones que coincidan con nuestra ip y nos las guardamos en un array
 	let ipLocal = '127.0.0.1';
 	coleccionarPuntuaciones(ipLocal);
-
-
 
 	// Añadimos los eventos
 	// refrescarFallas(seccion, añoDesde, añoHasta)
