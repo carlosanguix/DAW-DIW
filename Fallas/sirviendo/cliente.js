@@ -116,9 +116,9 @@ function mostrarPuntuacionFallasFiltradas() {
 		}
 
 		mediaIdFalla /= cantPuntuaciones;
-		
+
 		if (!isNaN(mediaIdFalla)) {
-			for (let k = 8; k >= 10 - mediaIdFalla * 2; k-=2) {
+			for (let k = 8; k >= 10 - mediaIdFalla * 2; k -= 2) {
 				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].checked = true;
 			}
 			/*for (let k = 9; k > 10 - mediaIdFalla * 2; k-=2) {
@@ -226,11 +226,22 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 }
 
 function mostrarUbicacion() {
-	
+
 	let idFallaUbicacion = this.parentElement.getAttribute('idFalla');
-	console.log(idFallaUbicacion);
-	console.log(fallasJSON);
-	
+
+	let contenedorMapa = document.getElementById('contenedorMapa');
+	let mapa = document.getElementById('mapa');
+
+	contenedorMapa.style.opacity = 0.3;
+	contenedorMapa.style.zIndex = 1;
+
+	mapa.style.opacity = 1;
+	mapa.style.zIndex = 1;
+
+	window.addEventListener('scroll', function () {
+		window.scrollTo(0, 0);
+	});
+
 	for (let i = 0; i < fallasJSON.length; i++) {
 		if (fallasJSON[i].properties.id == idFallaUbicacion) {
 			console.log(fallasJSON[i].properties.id);
