@@ -1,3 +1,23 @@
+// VARIABLES
+$empresa: ss;
+
+$logo: "";
+$colorPrincipal: "";
+$colorSecundario: "";
+$colorTernario: "";
+
+@if $empresa == evilcorp {
+  $logo: "img/evilcorp.png";
+  $colorPrincipal: red;
+  $colorSecundario: rgb(124, 0, 0);
+  $colorTernario: rgb(0, 0, 0);
+} @else {
+  $logo: "img/cthulhu.jpg";
+  $colorPrincipal: rgb(0, 100, 0);
+  $colorSecundario: rgb(0, 54, 0);
+  $colorTernario: rgb(0, 0, 0);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -7,10 +27,27 @@ body {
   padding-left: 20%;
   padding-right: 20%;
   font-size: x-large;
+
+  background: linear-gradient(90deg, $colorPrincipal 0%, $colorSecundario 8%, $colorTernario 50%, $colorSecundario 92%, $colorPrincipal 100%);
 }
 
-.divFalla:hover {
-  transform: scale(1.02);
+#logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100px;
+  height: 100px;
+  content: url($logo);
+}
+
+form {
+  margin: 0px;
+}
+
+#formulario {
+  background-color: white;
+  margin: 0px;
+  padding: 0px 10px 10px 10px;
 }
 
 #seccion,
@@ -22,15 +59,12 @@ body {
   border: 1px solid;
   border-radius: 2px 2px 2px 2px;
   font-size: large;
-}
-
-.anyo {
   padding-left: 5px;
   margin-bottom: 10px;
 }
 
 .labelTamanyo {
-  margin-bottom: 5px;
+  margin-top: 5px;
   display: block;
 }
 
@@ -38,6 +72,8 @@ body {
   width: 100%;
   align-self: center;
   margin: 30px 0px 30px 0px;
+  margin-top: 0px;
+  background-color: white;
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -90,6 +126,10 @@ body {
   .botonUbicacion:hover {
     box-shadow: inset 0px 30px 81px -36px rgba(230, 184, 0, 1);
   }
+
+  &:hover {
+    transform: scale(1.02);
+  }
 }
 
 #contenedorMapa {
@@ -132,7 +172,6 @@ body {
   justify-content: center;
 }
 
-
 .radioEstrellas {
   display: none;
 }
@@ -145,7 +184,6 @@ body {
   cursor: pointer;
   color: grey;
   font-size: 1.75em;
-  
 }
 
 .labelEstrellas:hover {
