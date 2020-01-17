@@ -1,5 +1,5 @@
 // VARIABLES
-$empresa: ss;
+$empresa: evilcorp;
 
 $logo: "";
 $colorPrincipal: "";
@@ -18,6 +18,8 @@ $colorTernario: "";
   $colorTernario: rgb(0, 0, 0);
 }
 
+
+
 html {
   scroll-behavior: smooth;
 }
@@ -28,16 +30,43 @@ body {
   padding-right: 20%;
   font-size: x-large;
 
-  background: linear-gradient(90deg, $colorPrincipal 0%, $colorSecundario 8%, $colorTernario 50%, $colorSecundario 92%, $colorPrincipal 100%);
+  background: linear-gradient(
+    90deg,
+    $colorPrincipal 0%,
+    $colorSecundario 8%,
+    $colorTernario 50%,
+    $colorSecundario 92%,
+    $colorPrincipal 100%
+  );
 }
 
 #logo {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 5%;
   width: 100px;
   height: 100px;
   content: url($logo);
+  background-color: $colorPrincipal;
+  color: $colorPrincipal;
+  border-radius: 70px 70px 70px 70px;
+  border: 2px solid $colorPrincipal;
+}
+
+.hamburger {
+  display: none;
+  position: absolute;
+  right: 5%;
+  top: 10px;
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  
+  #linea {
+    width: 80%;
+    height: 5px;
+    background-color: black;
+  }
 }
 
 form {
@@ -47,88 +76,91 @@ form {
 #formulario {
   background-color: white;
   margin: 0px;
+  margin-top: 10px;
+  border-radius: 16px 16px 16px 16px;
   padding: 0px 10px 10px 10px;
+
+  #seccion,
+  .anyo {
+    display: block;
+    height: 30px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 2px 2px 2px 2px;
+    font-size: large;
+    padding-left: 5px;
+    margin-bottom: 10px;
+  }
+
+  .labelTamanyo {
+    margin-top: 5px;
+    display: block;
+  }
 }
 
-#seccion,
-.anyo {
-  display: block;
-  height: 30px;
-  width: 100%;
-  background-color: white;
-  border: 1px solid;
-  border-radius: 2px 2px 2px 2px;
-  font-size: large;
-  padding-left: 5px;
-  margin-bottom: 10px;
-}
-
-.labelTamanyo {
-  margin-top: 5px;
-  display: block;
-}
 
 #fallas {
   width: 100%;
   align-self: center;
-  margin: 30px 0px 30px 0px;
-  margin-top: 0px;
-  background-color: white;
+  margin: 0px 0px 60px 0px;
+  padding-top: 60px;
+  background-color: transparent;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-column-gap: 15px;
   grid-row-gap: 30px;
   align-items: center;
   justify-items: center;
-}
 
-.divFalla {
-  height: 100%;
-  width: 320px;
-  background-color: linen;
-  text-align: center;
-  border: 2px solid black;
-  border-radius: 10px 10px 10px 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  .divFalla {
+    height: 100%;
+    width: 300px;
+    background-color: linen;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 
-  display: grid;
-  grid-template-rows: 75px 415px 60px 50px 35px;
-  align-items: center;
-  justify-items: center;
+    display: grid;
+    grid-template-rows: 75px 39px 415px 60px 50px 35px;
+    align-items: center;
+    justify-items: center;
 
-  transition: 0.2s;
+    transition: 0.2s;
 
-  p,
-  span {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
+    p,
+    span {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-  img {
-    width: 100%;
-    max-height: 415px;
-    align-self: center;
-  }
+    img {
+      width: 98%;
+      max-height: 415px;
+      align-self: center;
+    }
 
-  .botonUbicacion {
-    width: 100%;
-    height: 40px;
-    cursor: pointer;
-    outline: 0;
-    border-radius: 0px 0px 5px 5px;
-    border: 0;
-    border-top: 2px solid black;
-    background-color: transparent;
-    font-size: larger;
-  }
+    .botonUbicacion {
+      width: 100%;
+      height: 50px;
+      cursor: pointer;
+      outline: 0;
+      border-radius: 0px 0px 5px 5px;
+      border: 0;
+      border-top: 2px solid black;
+      background-color: transparent;
+      font-size: larger;
+    }
 
-  .botonUbicacion:hover {
-    box-shadow: inset 0px 30px 81px -36px rgba(230, 184, 0, 1);
-  }
+    .botonUbicacion:hover {
+      box-shadow: inset 0px 30px 81px -36px rgba(230, 184, 0, 1);
+    }
 
-  &:hover {
-    transform: scale(1.02);
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 }
 
@@ -155,6 +187,55 @@ form {
   left: 15%;
   z-index: -2;
   opacity: 0;
+  border: 5px solid yellow;
+}
+
+@media (max-width: 600px) {
+
+  body {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .formularioSinMostrar {
+    position: relative;
+    top: -320px;
+    transition: transform 0.5s;
+  }
+
+  .formularioMostrado {
+    transform: translateY(440px);
+  }
+
+  .hamburger {
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 16px 16px 16px 16px;
+    border: 2px solid black;
+    @if $empresa != evilcorp {
+      content: url($logo);
+    }
+  }
+
+  #fallas {
+    padding-top: 150px;
+  }
+
+  .fallasMovil {
+    position: absolute;
+    top: 20px;
+  }
+
+  #mapa {
+    top: 20%;
+    left: 0%;
+    width: 98%;
+    height: 79%;
+  }
 }
 
 // ESTRELLAS
@@ -195,5 +276,6 @@ form {
 }
 
 .rating {
+  margin-bottom: 20px;
   border: none;
 }

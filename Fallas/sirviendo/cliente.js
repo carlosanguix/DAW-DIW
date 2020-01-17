@@ -10,6 +10,9 @@ let puntuacionesIpLocal;
 // TODAS las puntuaciones
 let todasPuntuaciones;
 
+// Año actual
+let anyoActual;
+
 /*************************************/
 /* Sección de peticiones al servidor */
 /*************************************/
@@ -25,6 +28,7 @@ function listar() {
 		})
 		.then(function (json) {
 			fallasJSON = json.features;
+			console.log(fallasJSON);
 			rellenarCamposFiltros();
 		})
 		.catch(function (error) {
@@ -119,14 +123,24 @@ function mostrarPuntuacionFallasFiltradas() {
 
 		if (!isNaN(mediaIdFalla)) {
 			for (let k = 8; k >= 10 - mediaIdFalla * 2; k -= 2) {
-				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].checked = true;
+				fallasDOM[i].childNodes[4].firstChild.firstChild.children[k].checked = true;
 			}
-			/*for (let k = 9; k > 10 - mediaIdFalla * 2; k-=2) {
-				fallasDOM[i].childNodes[3].firstChild.firstChild.children[k].style.color = "#EEE831";
-			}*/
 		}
 
+		if (mediaIdFalla >= 4) {
+			
+			let urlLogo = getComputedStyle(document.querySelector("#logo")).color;
 
+			if (urlLogo.includes(100)) {
+				console.log('chulu');
+				fallasDOM[i].style.border = '5px solid #05550B';
+			} else {
+				console.log('evil');
+				fallasDOM[i].style.border = '5px solid #FF0000';
+				fallasDOM[i].style.backgroundColor = '#FF8A61';
+				console.log(fallasDOM[i]);
+			}
+		}
 	}
 }
 
@@ -160,7 +174,10 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		let boceto = document.createElement('img');
 
 		let nombreFalla = document.createElement('span');
-		nombreFalla.innerText = falla.properties.nombre;
+		nombreFalla.innerText = falla.properties.nombre + '.';
+
+		let anyoFundacion = document.createElement('span');
+		anyoFundacion.innerText = 'Año fundación: ' + falla.properties.anyo_fundacion;
 
 		let sector = document.createElement('span');
 		sector.setAttribute('id', "sectorFalla");
@@ -179,9 +196,9 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		// Creamos contenedores de estrellas
 		let starsfield = document.createElement('fieldset');
 		starsfield.classList.add('rating');
-
+		
 		let starsForm = document.createElement('form');
-
+		
 		let starsP = document.createElement('p');
 		starsP.classList.add('puntuacion');
 
@@ -210,8 +227,8 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 		botonUbicacion.innerText = "Ubicación";
 		botonUbicacion.addEventListener('click', mostrarUbicacion);
 
-
 		divFalla.appendChild(nombreFalla);
+		divFalla.appendChild(anyoFundacion);
 		divFalla.appendChild(boceto);
 		divFalla.appendChild(sector);
 
@@ -225,29 +242,76 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 	});
 }
 
-function mostrarUbicacion() {
+function mostrarPuntuacionesPorEstrtellas() {
+	console.log(this);
+}
 
+// Función con la que abrimos el mapa
+function mostrarUbicacion() {
+	
+	let ubicacion;
 	let idFallaUbicacion = this.parentElement.getAttribute('idFalla');
 
 	let contenedorMapa = document.getElementById('contenedorMapa');
 	let mapa = document.getElementById('mapa');
 
-	contenedorMapa.style.opacity = 0.3;
+	// Limpiamos el mapa
+	document.getElementsByTagName('body')[0].removeChild(mapa);
+
+	mapa = document.createElement('div');
+	mapa.setAttribute('id', 'mapa');
+	document.getElementsByTagName('body')[0].appendChild(mapa);
+
+	contenedorMapa.style.opacity = 0.5;
 	contenedorMapa.style.zIndex = 1;
 
 	mapa.style.opacity = 1;
 	mapa.style.zIndex = 1;
 
-	window.addEventListener('scroll', function () {
-		window.scrollTo(0, 0);
-	});
+	// TODO Deshabilitar scroll
+	document.body.style.overflow = 'hidden';
 
+	// Encontramos las coordenadas de esa falla
 	for (let i = 0; i < fallasJSON.length; i++) {
 		if (fallasJSON[i].properties.id == idFallaUbicacion) {
-			console.log(fallasJSON[i].properties.id);
-			console.log(fallasJSON[i].geometry.coordinates);
+			ubicacion = fallasJSON[i].geometry.coordinates;
+			console.log(ubicacion);
+			//console.log(fallasJSON[i].properties.id);
+			//console.log(fallasJSON[i].geometry.coordinates);
 		}
 	}
+
+	let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
+    let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+    let coordenadas = proj4(firstProjection, secondProjection, ubicacion);
+
+	let map = L.map('mapa').setView([coordenadas[1], coordenadas[0]], 30);
+
+	let marker = L.marker([coordenadas[1], coordenadas[0]]).addTo(map);
+
+	let tilerMapUrl = 'https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=FeZF25xvZUuP463NS59g';
+	L.tileLayer(tilerMapUrl, {
+		attribution: 'Map data © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, Imagery © <a href="http://www.kartena.se/">Kartena</a>',
+	}).addTo(map);
+
+	// Cerrar mapa
+	contenedorMapa.addEventListener('click', cerrarMapa);
+}
+
+// Función con la que cerramos el mapa
+function cerrarMapa() {
+
+	let contenedorMapa = document.getElementById('contenedorMapa');
+	let mapa = document.getElementById('mapa');
+
+	contenedorMapa.style.opacity = 0;
+	contenedorMapa.style.zIndex = -1;
+
+	mapa.style.opacity = 0;
+	mapa.style.zIndex = -1;
+
+	document.body.style.overflow = 'visible';
+
 }
 
 // Enviamos la puntuación al servidor para validarla
@@ -360,6 +424,13 @@ function coleccionarPuntuaciones(ipLocal) {
 
 }
 
+function funcionalidadMenu() {
+	console.log('hola');
+	document.getElementById('formulario').classList.toggle('formularioMostrado');
+	let fallas = document.getElementById('fallas');
+	fallas.classList.toggle('fallasMovil');
+}
+
 function init() {
 
 	// Inicializamos lo necesario
@@ -367,6 +438,12 @@ function init() {
 	puntuacionesIpLocal = [];
 	todasPuntuaciones = [];
 	listar();
+
+	document.querySelector('.hamburger').addEventListener('click', funcionalidadMenu);
+
+	// Nos quedamos con el año
+	anyoActual = new Date();
+	anyoActual = anyoActual.getFullYear();
 
 	// REcojemos todas las putuaciones para después sacar la media
 	coleccionarPuntuaciones();

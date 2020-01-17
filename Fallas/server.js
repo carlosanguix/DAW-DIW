@@ -7,7 +7,6 @@
 const express = require('express');
 const path = require('path');
 const proj4 = require('proj4');
-console.log(proj4);
 
 // MONGO
 const bodyParser = require('body-parser');
