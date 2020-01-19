@@ -49,3 +49,19 @@ pre {
   font-weight: 400;
   line-height: 18.5667px;
 }
+
+main {
+  display: block;
+}
+
+footer {
+  justify-content: center;
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  width: 100%;
+}
+
+canvas {
+  border: 1px solid black;
+}
