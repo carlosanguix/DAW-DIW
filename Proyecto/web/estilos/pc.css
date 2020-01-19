@@ -89,9 +89,11 @@ main {
     height: 33px;
     width: 330px;
     border: none;
+    outline: 0;
 }
 
 #butSendFooter {
+    outline: 0;
     height: 28px;
     width: 43px;
     margin: 2px;
@@ -99,6 +101,7 @@ main {
     border: 2px solid var(--brown);
     border-radius: 3px;
     padding: 0px;
+    cursor: pointer;
 }
 
 
@@ -147,6 +150,7 @@ a {
     background-color: var(--dark-orange);
     border-radius: 5px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .bar {
