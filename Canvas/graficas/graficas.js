@@ -1,7 +1,8 @@
 function selectGraph() {
 
-    colectData();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    colectData();
 
     let select = document.querySelector("select[name='select']");
     graphType = select.options[select.selectedIndex].value;
@@ -19,15 +20,46 @@ function buildBarsGraph() {
 
     buildCartesianCoordinates();
 
-    let maxValue = getMaxValue();
+    let barWidth = 80;
+    let barPositionX = 40;
 
-    console.log("altura: " + canvas.height);
-    console.log("anchura: " + canvas.width);
+    ctx.font = '20px Arial';
+
+    data.forEach(god => {
+        ctx.fillStyle = randomHexColor();
+        ctx.fillRect(barPositionX, canvas.height - god.value, barWidth, god.value);
+        ctx.fillText(god.name, barPositionX, canvas.height - god.value);
+        barPositionX += 150;
+    });
 
 }
 
 function buildLineGraph() {
 
+    buildCartesianCoordinates();
+
+    ctx.beginPath();
+    ctx.fillStyle = '#000000';
+    ctx.lineWidth = 1;
+
+    let pointPositionX = 0;
+    let godValue = canvas.height;
+
+    ctx.font = '20px Arial';
+
+    ctx.moveTo(pointPositionX, godValue);
+
+    data.forEach(god => {
+        pointPositionX += 100;
+        godValue = god.value;
+        ctx.lineTo(pointPositionX, canvas.height - godValue);
+        ctx.fillText(god.name, pointPositionX, canvas.height - god.value);
+        ctx.moveTo(pointPositionX, canvas.height - godValue);
+
+    });
+
+
+    ctx.stroke();
 
 }
 
@@ -46,34 +78,19 @@ function getMaxValue() {
 
 function buildCartesianCoordinates() {
 
-    
-
     ctx.beginPath();
     ctx.fillStyle = '#000000';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
 
-
-
-    /*
-    // Linea vertical (value)
-    ctx.moveTo(100, 310); // (x --, y |)
-    ctx.lineTo(100, 90);
-
-    // Linea horizontal (nombres)
-    ctx.moveTo(90, 300);
-    ctx.lineTo(500, 300);
+    for (let i = canvas.height - 100; i >= 100; i -= 100) {
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.fillText(canvas.height - i, 0, i)
+    }
 
     ctx.stroke();
 
-    for (let i = 0; i <= 200; i += 50) {
-        ctx.fillRect(93, 299 - i, 7, 2);
-    }
-
-    for (let i = 0; i <= 400; i += 50) {
-        ctx.fillRect(499 - i, 300, 2, 7);
-    }
-    */
-
+    ctx.closePath();
 }
 
 function buildPortionsGraph() {
@@ -114,8 +131,6 @@ function buildPortionsGraph() {
         ctx.closePath();
 
         startAngle = endAngle;
-
-
     });
 }
 
