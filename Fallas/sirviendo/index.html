@@ -1,0 +1,59 @@
+<html>
+
+<head>
+	<title>Fallas de Valencia</title>
+
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+	
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="estilos.css" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.5.0/proj4.js"></script>
+
+	<script src="cliente.js"></script>
+</head>
+
+<body>
+
+	<div class="hamburger"><span>Menú</span></div>
+
+	<div id="logo">
+
+	</div>
+
+	<div id="formulario" class="formularioSinMostrar">
+		<form action="">
+			<p>Sección</p>
+			<select name="seccion" id="seccion" value="Todas">
+				<option value="Todas">Todas</option>
+			</select>
+
+			<p>Año de fundación</p>
+			<input type="number" name="anyoDesde" id="anyoDesde" class="anyo" placeholder="Desde">
+			<input type="number" name="anyoHasta" id="anyoHasta" class="anyo" placeholder="Hasta">
+
+			<label for="principal" class="labelTamanyo"><input type="radio" name="tamaño" id="principal"
+					value="Principal" class="radio">Principal</label>
+			<label for="infantil" class="labelTamanyo"><input type="radio" name="tamaño" id="infantil" value="Infantil"
+					class="radio">Infantil</label>
+		</form>
+	</div>
+
+	<div id="fallas" class="fallasMovil">
+
+	</div>
+
+
+	<div id="contenedorMapa"></div>
+
+	<div id="mapa"></div>
+
+
+
+
+
+</body>
+
+</html>

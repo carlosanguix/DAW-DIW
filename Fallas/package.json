@@ -1,0 +1,25 @@
+{
+  "name": "miniserver",
+  "version": "1.0.0",
+  "description": "Es un pequeño servidor de paginas web en NodeJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "scss": "node-sass --watch estilosscss -o \"sirviendo/\""
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "Carlos Anguix Genovés",
+  "license": "Myself",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.4.0",
+    "mongoose": "^5.8.1",
+    "node-sass": "^4.13.0",
+    "nodemon": "^2.0.2",
+    "proj4": "^2.6.0"
+  }
+}

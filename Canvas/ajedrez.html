@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    canvas {
+        border: 2px solid black;
+    }
+</style>
+<body>
+    
+
+    <main>
+        <canvas width="800" height="800">
+
+        </canvas>
+    </main>
+
+    <script>
+        const canvas = document.querySelector('canvas');
+
+        let ctx = canvas.getContext('2d');
+
+        let widthSquare = canvas.getAttribute('width') / 8;
+        let heightSquare = canvas.getAttribute('height') / 8;
+
+        let firstColor;
+        let secondaryColor;
+
+        let x = 0;
+        let y = 0;
+
+        for (let i = 0; i < 8; i++) {
+            if(i % 2 == 0) {
+                firstColor = 'white';
+                secondaryColor = 'black';
+            } else {
+                firstColor = 'black';
+                secondaryColor = 'white';
+            }
+            for (let j = 0; j < 8; j++) {
+                if (j % 2 == 0) {
+                    ctx.fillStyle = firstColor;
+                } else {
+                    ctx.fillStyle = secondaryColor;
+                }
+                ctx.fillRect(x, y, widthSquare, heightSquare);
+                x += 100;
+            }
+            x = 0;
+            y += 100;
+        }
+    </script>
+</body>
+</html>

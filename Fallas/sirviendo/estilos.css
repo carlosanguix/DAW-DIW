@@ -1,0 +1,196 @@
+@charset "UTF-8";
+html {
+  scroll-behavior: smooth; }
+
+body {
+  margin: 0%;
+  padding-left: 20%;
+  padding-right: 20%;
+  font-size: x-large;
+  background: linear-gradient(90deg, darkgreen 0%, #003600 8%, black 50%, #003600 92%, darkgreen 100%); }
+
+#logo {
+  position: absolute;
+  top: 10px;
+  left: 5%;
+  width: 100px;
+  height: 100px;
+  content: url("img/cthulhu.jpg");
+  background-color: darkgreen;
+  color: darkgreen;
+  border-radius: 70px 70px 70px 70px;
+  border: 2px solid darkgreen; }
+
+.hamburger {
+  display: none;
+  position: absolute;
+  right: 5%;
+  top: 10px;
+  width: 100px;
+  height: 100px;
+  background-color: blue; }
+  .hamburger #linea {
+    width: 80%;
+    height: 5px;
+    background-color: black; }
+
+form {
+  margin: 0px; }
+
+#formulario {
+  background-color: white;
+  margin: 0px;
+  margin-top: 10px;
+  border-radius: 16px 16px 16px 16px;
+  padding: 0px 10px 10px 10px; }
+  #formulario #seccion,
+  #formulario .anyo {
+    display: block;
+    height: 30px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 2px 2px 2px 2px;
+    font-size: large;
+    padding-left: 5px;
+    margin-bottom: 10px; }
+  #formulario .labelTamanyo {
+    margin-top: 5px;
+    display: block; }
+
+#fallas {
+  width: 100%;
+  align-self: center;
+  margin: 0px 0px 60px 0px;
+  padding-top: 60px;
+  background-color: transparent;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-column-gap: 15px;
+  grid-row-gap: 30px;
+  align-items: center;
+  justify-items: center; }
+  #fallas .divFalla {
+    height: 100%;
+    width: 300px;
+    background-color: linen;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    display: grid;
+    grid-template-rows: 75px 39px 415px 60px 50px 35px;
+    align-items: center;
+    justify-items: center;
+    transition: 0.2s; }
+    #fallas .divFalla p,
+    #fallas .divFalla span {
+      font-weight: bold;
+      margin-bottom: 5px; }
+    #fallas .divFalla img {
+      width: 98%;
+      max-height: 415px;
+      align-self: center; }
+    #fallas .divFalla .botonUbicacion {
+      width: 100%;
+      height: 50px;
+      cursor: pointer;
+      outline: 0;
+      border-radius: 0px 0px 5px 5px;
+      border: 0;
+      border-top: 2px solid black;
+      background-color: transparent;
+      font-size: larger; }
+    #fallas .divFalla .botonUbicacion:hover {
+      box-shadow: inset 0px 30px 81px -36px #e6b800; }
+    #fallas .divFalla:hover {
+      transform: scale(1.02); }
+
+#contenedorMapa {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; }
+
+#mapa {
+  width: 70%;
+  height: 70%;
+  background-color: white;
+  position: fixed;
+  top: 15%;
+  left: 15%;
+  z-index: -2;
+  opacity: 0;
+  border: 5px solid yellow; }
+
+@media (max-width: 600px) {
+  body {
+    padding-left: 5%;
+    padding-right: 5%; }
+  .formularioSinMostrar {
+    position: relative;
+    top: -320px;
+    transition: transform 0.5s; }
+  .formularioMostrado {
+    transform: translateY(440px); }
+  .hamburger {
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 16px 16px 16px 16px;
+    border: 2px solid black;
+    content: url("img/cthulhu.jpg"); }
+  #fallas {
+    padding-top: 150px; }
+  .fallasMovil {
+    position: absolute;
+    top: 20px; }
+  #mapa {
+    top: 20%;
+    left: 0%;
+    width: 98%;
+    height: 79%; } }
+
+.puntuacion {
+  /*La propiedad direction: rtl; cambia la dirección de escritura  de 
+      derecha a izquierda ( right to left )*/
+  direction: rtl;
+  /* right to left */
+  /*Se utiliza junto con la propiedad direction para cambiar  la dirección 
+      del texto */
+  unicode-bidi: bidi-override;
+  /* bidi de bidireccional*/
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.radioEstrellas {
+  display: none; }
+
+.radioEstrellas:checked ~ label {
+  color: orange; }
+
+.labelEstrellas {
+  cursor: pointer;
+  color: grey;
+  font-size: 1.75em; }
+
+.labelEstrellas:hover {
+  color: orange; }
+
+.labelEstrellas:hover ~ label {
+  color: orange; }
+
+.rating {
+  margin-bottom: 20px;
+  border: none; }

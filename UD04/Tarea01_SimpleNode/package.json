@@ -1,0 +1,19 @@
+{
+  "name": "miniserver",
+  "version": "1.0.0",
+  "description": "Es un pequeño servidor de paginas web en NodeJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --watch estilosscss -o \"sirviendo\/\""
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "Angel Berlanas Vicente",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-sass": "^4.13.0"
+  }
+}
