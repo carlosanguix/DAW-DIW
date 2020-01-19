@@ -31,7 +31,6 @@ function buildBarsGraph() {
         ctx.fillText(god.name, barPositionX, canvas.height - god.value);
         barPositionX += 150;
     });
-
 }
 
 function buildLineGraph() {
@@ -57,23 +56,7 @@ function buildLineGraph() {
         ctx.moveTo(pointPositionX, canvas.height - godValue);
 
     });
-
-
     ctx.stroke();
-
-}
-
-function getMaxValue() {
-
-    let max = 0;
-
-    data.forEach(god => {
-        if (god.value > max) {
-            max = god.value;
-        }
-    });
-
-    return max;
 }
 
 function buildCartesianCoordinates() {
