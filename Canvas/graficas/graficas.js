@@ -82,7 +82,7 @@ function buildPortionsGraph() {
         return max + god.value;
     }, 0);
 
-    let startAngle = 0;
+    let startAngle = -0.5 * Math.PI;
     let radius = 120;
     let centerX = canvas.width / 2;
     let centerY = canvas.height / 2;
@@ -142,12 +142,13 @@ function loadListeners() {
     document.querySelector("input[name='grafiqueame']").addEventListener("click", selectGraph);
 }
 
+const a = document.querySelector('canvas');
 
 function init() {
 
     canvas = document.querySelector('canvas');
     ctx = canvas.getContext('2d');
-
+    console.log(a);
     loadListeners();
 }
 
@@ -155,5 +156,6 @@ let graphType;
 let data;
 let canvas;
 let ctx;
+
 
 window.onload = init;
