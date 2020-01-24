@@ -17,9 +17,8 @@ function selectGraph() {
 
 function buildBarsGraph() {
 
-    buildCartesianCoordinates();
+    printCoordinatesLines();
 
-    let maxValue = getMaxValue();
 
     console.log("altura: " + canvas.height);
     console.log("anchura: " + canvas.width);
@@ -44,15 +43,15 @@ function getMaxValue() {
     return max;
 }
 
-function buildCartesianCoordinates() {
+function printCoordinatesLines() {
 
-    
+    let maxValue = getMaxValue();
 
     ctx.beginPath();
     ctx.fillStyle = '#000000';
     ctx.lineWidth = 2;
 
-
+    
 
     /*
     // Linea vertical (value)
